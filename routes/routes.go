@@ -15,7 +15,7 @@ func New() *echo.Echo{
 	e.Pre(middleware.RemoveTrailingSlash())
 	om.LogMiddleware(e)
 
-	e.GET("/posts", presenter.PostPresentation.GetAllPost)
+	e.GET("/posts", presenter.PostPresentation.GetAllPost,middleware.BasicAuth(om.BasicAuth))
 	
 	return e
 }
