@@ -1,17 +1,22 @@
 package data
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+	"mpbe/features/posts"
+
+	"gorm.io/gorm"
+)
 
 type Post struct {
 	gorm.Model
-	IdPost uint
 	UrlImg string `gorm:"column:url_img"`
 	Caption string `gorm:"column:caption"`
-	IdOwner uint `gorm:"column:id_owner"`
-	CategoryID uint
+	IdOwner uint
 	TagPost []TagPost    `gorm:"many2many:posts_tag"`
 	
 }
+
+
 
 type TagPost struct{
 	gorm.Model	
@@ -19,3 +24,22 @@ type TagPost struct{
 }
 
 ///DTO
+
+func (a *Post) toCore() posts.Core{
+	fmt.Printf("%+v\n\n", a)
+	return posts.Core{
+		ID: int(a.ID),
+		UrlImg: a.UrlImg,
+		Caption: a.Caption,
+		CreatedAt: a.CreatedAt,
+		UpdatedAt: a.UpdatedAt,
+	}
+}
+
+func toCoreList(resp []Post) []posts.Core{
+	a:=[]posts.Core{}
+	for key:=range resp{
+		a=append(a, resp[key].toCore())
+	}
+	return a
+}
