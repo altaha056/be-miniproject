@@ -1,5 +1,8 @@
 package main
 
-func main(){
+import "mpbe/config"
+
+func main() {
+	config.InitDB()
 	
 }
