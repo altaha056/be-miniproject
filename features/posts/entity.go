@@ -23,7 +23,7 @@ type Bussiness interface {
 
 type Data interface {
 	InsertData(data Core) (resp Core, err error)
-	SelectData(title string) (resp []Core)
+	SelectData(caption string) (resp []Core)
 }
 
 

@@ -1,10 +1,10 @@
 package factory
 
 import (
-	_post_business "mbpe/features/posts/bussiness"
+	_post_business "mpbe/features/posts/business"
 	_post_data "mpbe/features/posts/data"
 
-	_post_presentation "mbpe/features/posts/presentation"
+	_post_presentation "mpbe/features/posts/presentation"
 	"mpbe/config"
 )
 
@@ -14,9 +14,9 @@ type Presenter struct {
 
 func Init() Presenter {
 
-	postData := _post_data.NewPostRepository(config.DB)
-	postBussiness := _post_business.NewAricleBussiness(postData)
-	postPresentation := _post_presentation.NewPostHandler(postBussiness)
+	postData:=_post_data.NewPostRepository(config.DB)
+	postBusiness:=_post_business.NewPostBusiness(postData)
+	postPresentation:=_post_presentation.NewPostHandler(postBusiness)
 
 	return Presenter{
 		PostPresentation: postPresentation,
