@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"go/token"
 	"time"
 
 	"antonio/config"

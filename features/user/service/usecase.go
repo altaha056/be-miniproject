@@ -41,8 +41,8 @@ func (usv *userService) GetUsers(data user.UserCore)([]user.UserCore, error){
 	return users,nil
 }
 
-func (usv *userService) GetUserByName(name string)(user.UserCore,error){
-	userData,err:=usv.userRepository.GetDataByName(name)
+func (usv *userService) GetUserById(id int)(user.UserCore,error){
+	userData,err:=usv.userRepository.GetDataById(id)
 	if err!=nil{
 		return user.UserCore{},err
 	}

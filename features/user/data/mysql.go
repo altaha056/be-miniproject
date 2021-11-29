@@ -3,11 +3,13 @@ package data
 import (
 	"antonio/features/user"
 	"errors"
+
 	"gorm.io/gorm"
 )
 
 type mysqlUserRepository struct {
-	DB *gorm.DB}
+	DB *gorm.DB
+}
 
 func NewMysqlUserRepository(DB *gorm.DB) user.Repository{
 	return &mysqlUserRepository{DB}
@@ -35,9 +37,9 @@ func (mur *mysqlUserRepository)CheckUser(data user.UserCore)(user.UserCore, erro
 	return toUserCore(userData), nil
 }
 
-func (mur *mysqlUserRepository)GetDataByName(name string)(user.UserCore, error){
+func (mur *mysqlUserRepository)GetDataById(id int)(user.UserCore, error){
 	var userData User
-	err:=mur.DB.First(&userData, name).Error
+	err:=mur.DB.First(&userData, id).Error
 
 	if userData.Name=="" && userData.ID ==0{
 		return user.UserCore{}, errors.New("no user found")
