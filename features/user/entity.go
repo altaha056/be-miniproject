@@ -1,13 +1,13 @@
 package recruiter
 
 type UserCore struct {
-	ID       uint
-	Name  string
-	Bio      string
-	Gender      string
-	Email    string
-	Password string
-	Token    string
+	ID       	uint
+	Name  		string
+	Bio      	string
+	Gender     	string
+	Email    	string
+	Password 	string
+	Token    	string
 }
 
 type Service interface {
