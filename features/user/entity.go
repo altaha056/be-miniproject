@@ -1,26 +1,27 @@
-package recruiter
+package user
+
 
 type UserCore struct {
-	ID       	uint
-	Name  		string
-	Bio      	string
-	Gender     	string
-	Email    	string
-	Password 	string
-	Token    	string
+	Id          uint
+	Name        string
+	Bio         string
+	Gender      string
+	Email       string
+	Password    string
+	Token       string
 }
 
+
 type Service interface {
-	RegisterUser(data UserCore) error
-	LoginUser(data UserCore) (UserCore, error)
-	GetUsers() ([]UserCore, error)
-	GetUserById(data UserCore) (UserCore, error)
+	RegisterUser(data UserCore) (err error)
+	LoginUser(data UserCore) (user UserCore, err error)
+	GetUsers(data UserCore) (users []UserCore, err error)
+	GetUserById(id int) (user UserCore, err error)
 }
 
 type Repository interface {
-	CreateUser(data UserCore) error
-	CheckUser(data UserCore) (UserCore, error)
-	GetUsers() ([]UserCore, error)
-	GetUserById(data UserCore) (UserCore, error)
+	InsertData(data UserCore) (err error)
+	CheckUser(data UserCore) (user UserCore, err error)
+	GetData(UserCore) (user []UserCore, err error)
+	GetDataById(id int) (user UserCore, err error)
 }
-//development
