@@ -12,7 +12,7 @@ type UserCore struct {
 }
 
 
-type Service interface {
+type Business interface {
 	RegisterUser(data UserCore) (err error)
 	LoginUser(data UserCore) (user UserCore, err error)
 	GetUsers(data UserCore) (users []UserCore, err error)

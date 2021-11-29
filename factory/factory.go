@@ -4,7 +4,7 @@ import (
 	"antonio/driver"
 	userData "antonio/features/user/data"
 	userPresentaion "antonio/features/user/presentation"
-	userService "antonio/features/user/service"
+	userBusiness "antonio/features/user/business"
 )
 
 type factoryPresenter struct{
@@ -13,10 +13,10 @@ type factoryPresenter struct{
 
 func Init() factoryPresenter{
 	userData := userData.NewMysqlUserRepository(driver.DB)
-	userService := userService.NewUserService(userData)
+	userBusiness := userBusiness.NewUserService(userData)
 
 	return factoryPresenter{
-		UserPresentation: *userPresentaion.NewUserHandler(userService),
+		UserPresentation: *userPresentaion.NewUserHandler(userBusiness),
 	}
 }
 

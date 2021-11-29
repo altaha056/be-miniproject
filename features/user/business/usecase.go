@@ -1,4 +1,4 @@
-package service
+package business
 
 import (
 	"antonio/features/user"
@@ -10,7 +10,7 @@ type userService struct {
 	
 }
 
-func NewUserService(userRepository user.Repository) user.Service {
+func NewUserService(userRepository user.Repository) user.Business {
 	return &userService{userRepository}
 }
 

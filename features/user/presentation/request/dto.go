@@ -8,7 +8,7 @@ type UserRequest struct {
 	Name        string              `json: "name"`
 	Bio         string              `json: "bio"`
 	Gender      string              `json: "gender"`
-	Email       string              `json: "email"`
+	Email       string              `json: "email" sql:"not null;unique"`
 	Password    string              `json: "password"`
 }
 
