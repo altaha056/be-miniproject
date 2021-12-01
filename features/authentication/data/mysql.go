@@ -19,36 +19,6 @@ func NewMysqlAuthRepository(conn *gorm.DB) auth.Data {
 	}
 }
 
-// func (ur *mysqlAuthRepository) AddRefreshToken(data auth.Core) error {
-// 	recordData := toAuthRecord(data)
-// 	err := ur.Conn.Create(&recordData).Error
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
-
-// func (ur *mysqlAuthRepository) VerifyRefreshToken(data auth.Core) error {
-// 	recordData := toAuthRecord(data)
-// 	err := ur.Conn.Where("token = ?", data.Token).First(&recordData).Error
-// 	if err != nil {
-// 		return err
-// 	}
-// 	if recordData.Token == "" {
-// 		return errors.New("refresh token is not valid")
-// 	}
-// 	return nil
-// }
-
-// func (ur *mysqlAuthRepository) DeleteRefreshToken(data auth.Core) error {
-// 	recordData := toAuthRecord(data)
-// 	err := ur.Conn.Where("token = ?", data.Token).Delete(&recordData).Error
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
-
 func (ur *mysqlAuthRepository) TokenAuthentication(data users.Core) (users.Core, error) {
 
 	recordData := toUserRecord(data)

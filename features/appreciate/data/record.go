@@ -2,7 +2,7 @@ package data
 
 import (
 	"antonio/features/articles"
-	"antonio/features/likes"
+	"antonio/features/appreciate"
 	"time"
 
 	"gorm.io/gorm"

@@ -1,7 +1,6 @@
 package request
 
 import (
-	// "antonio/features/auth"
 	"antonio/features/users"
 )
 
@@ -10,9 +9,6 @@ type UserRequest struct {
 	Password string `json:"password"`
 }
 
-// type TokenRequest struct {
-// 	RefreshToken string `json:"refreshToken"`
-// }
 
 func (requestData *UserRequest) ToUserCore() users.Core {
 	return users.Core{
@@ -20,9 +16,3 @@ func (requestData *UserRequest) ToUserCore() users.Core {
 		Password: requestData.Password,
 	}
 }
-
-// func (requestData *TokenRequest) ToTokenCore() auth.Core {
-// 	return auth.Core{
-// 		Token: requestData.RefreshToken,
-// 	}
-// }

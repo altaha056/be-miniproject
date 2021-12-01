@@ -1,7 +1,7 @@
 package data
 
 import (
-	"antonio/features/likes"
+	"antonio/features/appreciate"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"

@@ -1,7 +1,7 @@
 package business
 
 import (
-	"antonio/features/likes"
+	"antonio/features/appreciate"
 )
 
 type articleLikesUsecase struct {

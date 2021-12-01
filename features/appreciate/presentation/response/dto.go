@@ -1,7 +1,7 @@
 package response
 
 import (
-	"antonio/features/likes"
+	"antonio/features/appreciate"
 	"time"
 )
 

@@ -2,8 +2,8 @@ package presentation
 
 import (
 	"net/http"
-	"antonio/features/likes"
-	"antonio/features/likes/presentation/response"
+	"antonio/features/appreciate"
+	"antonio/features/appreciate/presentation/response"
 	"antonio/middlewares"
 
 	"strconv"
