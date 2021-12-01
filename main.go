@@ -1,11 +1,13 @@
 package main
 
 import (
-	"antonio/driver"
+	"antonio/db"
+	"antonio/migrate"
 	"antonio/routes"
 )
 func main() {
-	driver.InitDB()
-	conn:=routes.New()
-	conn.Start("localhost:8000")
+	db.InitDB()
+	migrate.AutoMigrate()
+	e := routes.New()
+	e.Start(":8000")
 }

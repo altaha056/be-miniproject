@@ -1,22 +1,73 @@
 package factory
 
 import (
-	"antonio/driver"
-	userData "antonio/features/user/data"
-	userPresentaion "antonio/features/user/presentation"
-	userBusiness "antonio/features/user/business"
+	"antonio/db"
+
+	// auth domain
+	authBusiness "antonio/features/authentication/business"
+	authData "antonio/features/authentication/data"
+	authPresentation "antonio/features/authentication/presentation"
+
+	// user domain
+	userBusiness "antonio/features/users/business"
+	userData "antonio/features/users/data"
+	userPresentation "antonio/features/users/presentation"
+
+	// article domain
+	articleBusiness "antonio/features/articles/business"
+	articleData "antonio/features/articles/data"
+	articlePresentation "antonio/features/articles/presentation"
+
+	// likes domain
+	articleLikesBusiness "antonio/features/likes/business"
+	articleLikesData "antonio/features/likes/data"
+	articleLikesPresentation "antonio/features/likes/presentation"
+
+	// comments domain
+	commentsBusiness "antonio/features/comments/business"
+	commentsData "antonio/features/comments/data"
+	commentsPresentation "antonio/features/comments/presentation"
 )
 
-type factoryPresenter struct{
-	UserPresentation userPresentaion.UserHandler
+type Presenter struct {
+	AuthHandler         authPresentation.AuthHandler
+	UserHandler         userPresentation.UserHandler
+	ArticleHandler      articlePresentation.ArticleHandler
+	ArticleLikesHandler articleLikesPresentation.ArticleLikesHandler
+	CommentHandler      commentsPresentation.CommentHandler
 }
 
-func Init() factoryPresenter{
-	userData := userData.NewMysqlUserRepository(driver.DB)
-	userBusiness := userBusiness.NewUserService(userData)
+func Init() Presenter {
+	// auth layer
+	authData := authData.NewMysqlAuthRepository(db.DB)
+	authBusiness := authBusiness.NewAuthBusiness(authData)
+	authPresentation := authPresentation.NewAuthHandler(authBusiness)
 
-	return factoryPresenter{
-		UserPresentation: *userPresentaion.NewUserHandler(userBusiness),
+	// users layer
+	userData := userData.NewMysqlUserRepository(db.DB)
+	userBusiness := userBusiness.NewUserBusiness(userData)
+	userPresentation := userPresentation.NewUserHandler(userBusiness)
+
+	// articles layer
+	articleData := articleData.NewMysqlArticleRepository(db.DB)
+	articleBusiness := articleBusiness.NewArticleBusiness(articleData)
+	articlePresentation := articlePresentation.NewArticleHandler(articleBusiness)
+
+	// article likes layer
+	articleLikesData := articleLikesData.NewMysqlArticleLikesRepository(db.DB)
+	articleLikesBusiness := articleLikesBusiness.NewArticleLikesBusiness(articleLikesData)
+	articleLikesPresentation := articleLikesPresentation.NewArticleLikesHandler(articleLikesBusiness)
+
+	// comments layer
+	commentsData := commentsData.NewMysqlCommentsRepository(db.DB)
+	commentsBusiness := commentsBusiness.NewCommentsBusiness(commentsData)
+	commentsPresentation := commentsPresentation.NewCommentHandler(commentsBusiness)
+
+	return Presenter{
+		AuthHandler:         *authPresentation,
+		UserHandler:         *userPresentation,
+		ArticleHandler:      *articlePresentation,
+		ArticleLikesHandler: *articleLikesPresentation,
+		CommentHandler:      *commentsPresentation,
 	}
 }
-
