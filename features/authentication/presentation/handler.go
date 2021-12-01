@@ -5,8 +5,6 @@ import (
 	"antonio/features/authentication"
 	"antonio/features/authentication/presentation/request"
 	"antonio/features/authentication/presentation/response"
-	// "antonio/middlewares"
-
 	"github.com/labstack/echo/v4"
 )
 
@@ -21,7 +19,7 @@ func NewAuthHandler(authBusiness auth.Business) *AuthHandler {
 func (ah *AuthHandler) LoginHandler(e echo.Context) error {
 	user := request.UserRequest{}
 	e.Bind(&user)
-	accessToken, /*refreshToken,*/ err := ah.AuthBusiness.Login(user.ToUserCore())
+	accessToken, err := ah.AuthBusiness.Login(user.ToUserCore())
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "login failed",
@@ -32,56 +30,7 @@ func (ah *AuthHandler) LoginHandler(e echo.Context) error {
 		"message": "login success",
 		"data": response.AuthResponse{
 			AccessToken:  accessToken.Token,
-			// RefreshToken: refreshToken.Token,
 		},
 	})
 }
 
-// func (ah *AuthHandler) ReLoginHandler(e echo.Context) error {
-// 	auth := request.TokenRequest{}
-// 	e.Bind(&auth)
-// 	userId, err := middlewares.VerifyRefreshToken(auth.RefreshToken)
-
-// 	if err != nil {
-// 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
-// 			"status":  "fail",
-// 			"message": "cannot create acccess token",
-// 			"err":     err.Error(),
-// 		})
-// 	}
-
-// 	accessToken, err := ah.AuthBusiness.ReLogin(auth.ToTokenCore(), userId)
-// 	if err != nil {
-// 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
-// 			"status":  "fail",
-// 			"message": "cannot create acccess token",
-// 			"err":     err.Error(),
-// 		})
-// 	}
-// 	return e.JSON(http.StatusBadRequest, map[string]interface{}{
-// 		"status":  "success",
-// 		"message": "create acccess token",
-// 		"data": response.AuthRefreshResponse{
-// 			AccessToken: accessToken.Token,
-// 		},
-// 	})
-
-// }
-
-// func (ah *AuthHandler) LogoutHandler(e echo.Context) error {
-// 	auth := request.TokenRequest{}
-// 	e.Bind(&auth)
-// 	err := ah.AuthBusiness.Logout(auth.ToTokenCore())
-// 	if err != nil {
-// 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
-// 			"status":  "fail",
-// 			"message": "cannot delete refresh token",
-// 			"err":     err.Error(),
-// 		})
-// 	}
-// 	return e.JSON(http.StatusOK, map[string]interface{}{
-// 		"status":  "success",
-// 		"message": "delete refresh token",
-// 	})
-
-// }

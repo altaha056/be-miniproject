@@ -18,10 +18,10 @@ import (
 	articleData "antonio/features/articles/data"
 	articlePresentation "antonio/features/articles/presentation"
 
-	// likes domain
-	articleLikesBusiness "antonio/features/likes/business"
-	articleLikesData "antonio/features/likes/data"
-	articleLikesPresentation "antonio/features/likes/presentation"
+	// appreciate domain
+	appreciateBusiness "antonio/features/appreciate/business"
+	appreciateData "antonio/features/appreciate/data"
+	appreciatePresentation "antonio/features/appreciate/presentation"
 
 	// comments domain
 	commentsBusiness "antonio/features/comments/business"
@@ -33,7 +33,7 @@ type Presenter struct {
 	AuthHandler         authPresentation.AuthHandler
 	UserHandler         userPresentation.UserHandler
 	ArticleHandler      articlePresentation.ArticleHandler
-	ArticleLikesHandler articleLikesPresentation.ArticleLikesHandler
+	RatingHandler    	appreciatePresentation.RatingHandler
 	CommentHandler      commentsPresentation.CommentHandler
 }
 
@@ -53,10 +53,10 @@ func Init() Presenter {
 	articleBusiness := articleBusiness.NewArticleBusiness(articleData)
 	articlePresentation := articlePresentation.NewArticleHandler(articleBusiness)
 
-	// article likes layer
-	articleLikesData := articleLikesData.NewMysqlArticleLikesRepository(db.DB)
-	articleLikesBusiness := articleLikesBusiness.NewArticleLikesBusiness(articleLikesData)
-	articleLikesPresentation := articleLikesPresentation.NewArticleLikesHandler(articleLikesBusiness)
+	// article appreciate layer
+	appreciateData := appreciateData.NewMysqlRatingRepository(db.DB)
+	appreciateBusiness := appreciateBusiness.NewRatingBusiness(appreciateData)
+	appreciatePresentation := appreciatePresentation.NewRatingHandler(appreciateBusiness)
 
 	// comments layer
 	commentsData := commentsData.NewMysqlCommentsRepository(db.DB)
@@ -67,7 +67,7 @@ func Init() Presenter {
 		AuthHandler:         *authPresentation,
 		UserHandler:         *userPresentation,
 		ArticleHandler:      *articlePresentation,
-		ArticleLikesHandler: *articleLikesPresentation,
+		RatingHandler: 	 	 *appreciatePresentation,
 		CommentHandler:      *commentsPresentation,
 	}
 }

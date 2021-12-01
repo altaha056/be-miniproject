@@ -1,4 +1,4 @@
-package likes
+package appreciate
 
 import "time"
 
@@ -33,15 +33,15 @@ type TagCore struct {
 }
 
 type Business interface {
-	LikeArticle(articleId, userId int) error
-	GetLikedArticles(userId int) ([]ArticleCore, error)
-	GetLikingUsers(articleId int) ([]UserCore, error)
-	UnlikeArticle(articleId, userId int) error
+	Upvote(articleId, userId int) error
+	Rating(userId int) ([]ArticleCore, error)
+	WhoVote(articleId int) ([]UserCore, error)
+	Downvote(articleId, userId int) error
 }
 
 type Data interface {
-	LikeArticle(articleId, userId int) error
-	GetLikedArticles(userId int) ([]ArticleCore, error)
-	GetLikingUsers(articleId int) ([]UserCore, error)
-	UnlikeArticle(articleId, userId int) error
+	Upvote(articleId, userId int) error
+	Rating(userId int) ([]ArticleCore, error)
+	WhoVote(articleId int) ([]UserCore, error)
+	Downvote(articleId, userId int) error
 }

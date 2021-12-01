@@ -2,13 +2,13 @@ package data
 
 import (
 	"antonio/features/articles"
-	"antonio/features/likes"
+	"antonio/features/appreciate"
 	"time"
 
 	"gorm.io/gorm"
 )
 
-type ArticleLikes struct {
+type Rating struct {
 	gorm.Model
 	ArticleID int
 	Article   Article
@@ -42,8 +42,8 @@ type Tag struct {
 	Title string `gorm:"unique"`
 }
 
-func toArticleLikesRecord(data likes.Core) ArticleLikes {
-	return ArticleLikes{
+func toRatingRecord(data appreciate.Core) Rating {
+	return Rating{
 		UserID:    data.UserId,
 		ArticleID: data.ArticleId,
 	}
@@ -78,8 +78,8 @@ func toArticleRecord(article articles.Core) Article {
 	}
 }
 
-func toArticleCore(article Article) likes.ArticleCore {
-	return likes.ArticleCore{
+func toArticleCore(article Article) appreciate.ArticleCore {
+	return appreciate.ArticleCore{
 		ID:        article.ID,
 		Title:     article.Title,
 		Image:     article.Image,
@@ -91,23 +91,23 @@ func toArticleCore(article Article) likes.ArticleCore {
 	}
 }
 
-func toUserCore(user User) likes.UserCore {
-	return likes.UserCore{
+func toUserCore(user User) appreciate.UserCore {
+	return appreciate.UserCore{
 		ID:       user.ID,
 		Email:    user.Email,
 		Username: user.Username,
 	}
 }
 
-func toTagCore(tag Tag) likes.TagCore {
-	return likes.TagCore{
+func toTagCore(tag Tag) appreciate.TagCore {
+	return appreciate.TagCore{
 		ID:    tag.ID,
 		Title: tag.Title,
 	}
 }
 
-func toUserCoreList(aList []ArticleLikes) []likes.UserCore {
-	convertedUser := []likes.UserCore{}
+func toUserCoreList(aList []Rating) []appreciate.UserCore {
+	convertedUser := []appreciate.UserCore{}
 
 	for _, user := range aList {
 		convertedUser = append(convertedUser, toUserCore(user.User))
@@ -115,8 +115,8 @@ func toUserCoreList(aList []ArticleLikes) []likes.UserCore {
 
 	return convertedUser
 }
-func toArticleCoreList(aList []ArticleLikes) []likes.ArticleCore {
-	convertedArticle := []likes.ArticleCore{}
+func toArticleCoreList(aList []Rating) []appreciate.ArticleCore {
+	convertedArticle := []appreciate.ArticleCore{}
 
 	for _, article := range aList {
 		convertedArticle = append(convertedArticle, toArticleCore(article.Article))
@@ -125,8 +125,8 @@ func toArticleCoreList(aList []ArticleLikes) []likes.ArticleCore {
 	return convertedArticle
 }
 
-func toTagsCoreList(tList []Tag) []likes.TagCore {
-	convertedTag := []likes.TagCore{}
+func toTagsCoreList(tList []Tag) []appreciate.TagCore {
+	convertedTag := []appreciate.TagCore{}
 
 	for _, tag := range tList {
 		convertedTag = append(convertedTag, toTagCore(tag))
