@@ -31,20 +31,20 @@ func New() *echo.Echo {
 
 	e.POST("/content", presenter.ArticleHandler.CreateArticleHandler, middleware.JWTWithConfig(configJWT))
 	e.GET("/content", presenter.ArticleHandler.GetAllArticleHandler)
-	e.GET("/content/:articleId", presenter.ArticleHandler.GetArticleByIdHandler)
-	e.PUT("/content/:articleId", presenter.ArticleHandler.UpdateArticleByIdHandler, middleware.JWTWithConfig(configJWT))
-	e.DELETE("/content/:articleId", presenter.ArticleHandler.DeleteArticleByIdHandler, middleware.JWTWithConfig(configJWT))
+	e.GET("/content/:contentId", presenter.ArticleHandler.GetArticleByIdHandler)
+	e.PUT("/content/:contentId", presenter.ArticleHandler.UpdateArticleByIdHandler, middleware.JWTWithConfig(configJWT))
+	e.DELETE("/content/:contentId", presenter.ArticleHandler.DeleteArticleByIdHandler, middleware.JWTWithConfig(configJWT))
 	
 	
-	e.GET("/content/:articleId/likes", presenter.RatingHandler.GetLikingUsers)
-	e.PUT("/content/:articleId/likes", presenter.RatingHandler.LikeArticle, middleware.JWTWithConfig(configJWT))
-	e.DELETE("/content/:articleId/likes", presenter.RatingHandler.UnlikeArticle, middleware.JWTWithConfig(configJWT))
+	e.GET("/content/:contentId/likes", presenter.RatingHandler.GetLikingUsers)
+	e.PUT("/content/:contentId/likes", presenter.RatingHandler.LikeArticle, middleware.JWTWithConfig(configJWT))
+	e.DELETE("/content/:contentId/likes", presenter.RatingHandler.UnlikeArticle, middleware.JWTWithConfig(configJWT))
 	
 
-	e.GET("/content/:articleId/comments", presenter.CommentHandler.GetArticleComments)
-	e.POST("/content/:articleId/comments", presenter.CommentHandler.AddComment)
-	e.PATCH("/content/:articleId/comments/:commentId", presenter.CommentHandler.UpdateComment)
-	e.DELETE("/content/:articleId/comments/:commentId", presenter.CommentHandler.DeleteComment)
+	e.GET("/content/:contentId/comments", presenter.CommentHandler.GetArticleComments)
+	e.POST("/content/:contentId/comments", presenter.CommentHandler.AddComment)
+	e.PATCH("/content/:contentId/comments/:commentId", presenter.CommentHandler.UpdateComment)
+	e.DELETE("/content/:contentId/comments/:commentId", presenter.CommentHandler.DeleteComment)
 
 	return e
 

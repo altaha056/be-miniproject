@@ -64,14 +64,14 @@ func (ah *ArticleHandler) GetAllArticleHandler(e echo.Context) error {
 }
 
 func (ah *ArticleHandler) GetArticleByIdHandler(e echo.Context) error {
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"err":     err.Error(),
 		})
 	}
 
-	data, err := ah.ArticleBusiness.GetArticleById(articleId)
+	data, err := ah.ArticleBusiness.GetArticleById(contentId)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"err":     err.Error(),
@@ -86,7 +86,7 @@ func (ah *ArticleHandler) GetArticleByIdHandler(e echo.Context) error {
 }
 
 func (ah *ArticleHandler) UpdateArticleByIdHandler(e echo.Context) error {
-	articleId, _ := strconv.Atoi(e.Param("articleId"))
+	contentId, _ := strconv.Atoi(e.Param("contentId"))
 	articleData := request.ArticleRequest{}
 	err := e.Bind(&articleData)
 	if err != nil {
@@ -102,7 +102,7 @@ func (ah *ArticleHandler) UpdateArticleByIdHandler(e echo.Context) error {
 		})
 	}
 
-	err = ah.ArticleBusiness.UpdateArticleById(articleId, articleData.ToArticleCore(), userId)
+	err = ah.ArticleBusiness.UpdateArticleById(contentId, articleData.ToArticleCore(), userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -116,7 +116,7 @@ func (ah *ArticleHandler) UpdateArticleByIdHandler(e echo.Context) error {
 }
 
 func (uh *ArticleHandler) DeleteArticleByIdHandler(e echo.Context) error {
-	articleId, _ := strconv.Atoi(e.Param("articleId"))
+	contentId, _ := strconv.Atoi(e.Param("contentId"))
 
 	userId, err := middlewares.VerifyAccessToken(e)
 	if err != nil {
@@ -125,7 +125,7 @@ func (uh *ArticleHandler) DeleteArticleByIdHandler(e echo.Context) error {
 		})
 	}
 
-	err = uh.ArticleBusiness.DeleteArticleById(articleId, userId)
+	err = uh.ArticleBusiness.DeleteArticleById(contentId, userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),

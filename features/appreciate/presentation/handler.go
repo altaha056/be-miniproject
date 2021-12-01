@@ -21,7 +21,7 @@ func NewRatingHandler(ratingBusiness appreciate.Business) *RatingHandler {
 
 func (uh *RatingHandler) LikeArticle(e echo.Context) error {
 
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -33,7 +33,7 @@ func (uh *RatingHandler) LikeArticle(e echo.Context) error {
 			"err":     err.Error(),
 		})
 	}
-	err = uh.RatingBusiness.Upvote(articleId, userId)
+	err = uh.RatingBusiness.Upvote(contentId, userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -46,7 +46,7 @@ func (uh *RatingHandler) LikeArticle(e echo.Context) error {
 }
 
 func (uh *RatingHandler) UnlikeArticle(e echo.Context) error {
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -58,7 +58,7 @@ func (uh *RatingHandler) UnlikeArticle(e echo.Context) error {
 			"err":     err.Error(),
 		})
 	}
-	err = uh.RatingBusiness.Downvote(articleId, userId)
+	err = uh.RatingBusiness.Downvote(contentId, userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -93,13 +93,13 @@ func (alh *RatingHandler) GetLikedArticles(e echo.Context) error {
 }
 
 func (alh *RatingHandler) GetLikingUsers(e echo.Context) error {
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
 		})
 	}
-	data, err := alh.RatingBusiness.WhoVote(articleId)
+	data, err := alh.RatingBusiness.WhoVote(contentId)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"err":     err.Error(),
