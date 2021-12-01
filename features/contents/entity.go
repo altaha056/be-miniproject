@@ -11,7 +11,7 @@ type Core struct {
 	UpdatedAt time.Time
 	UserId    int
 	User      UserCore
-	Tags      []TagCore
+	Tools     []ToolCore
 }
 
 type UserCore struct {
@@ -21,7 +21,7 @@ type UserCore struct {
 	Image    string
 }
 
-type TagCore struct {
+type ToolCore struct {
 	ID    int
 	Title string
 }
@@ -36,8 +36,8 @@ type Business interface {
 }
 
 type Data interface {
-	CreateTags(tags []TagCore) ([]TagCore, error)
-	CreateArticle(data Core, userId int, tags []TagCore) error
+	CreateTags(tags []ToolCore) ([]ToolCore, error)
+	CreateArticle(data Core, userId int, tags []ToolCore) error
 	GetAllArticles() ([]Core, error)
 	GetArticleById(articleId int) (Core, error)
 	UpdateArticleById(articleId int, data Core) error

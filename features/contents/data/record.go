@@ -17,7 +17,7 @@ type Content struct {
 	UpdatedAt time.Time
 	UserID    int
 	User      User
-	Tags      []Tool `gorm:"many2many:content_tools;"`
+	Tools     []Tool `gorm:"many2many:content_tools;"`
 }
 
 type User struct {
@@ -41,7 +41,7 @@ func toUserRecord(user contents.UserCore) User {
 	}
 }
 
-func toTagRecord(tag contents.TagCore) Tool {
+func toTagRecord(tag contents.ToolCore) Tool {
 	return Tool{
 		ID:    tag.ID,
 		Title: tag.Title,
@@ -58,7 +58,7 @@ func toArticleRecord(article contents.Core) Content {
 		UpdatedAt: article.UpdatedAt,
 		UserID:    article.UserId,
 		User:      toUserRecord(article.User),
-		Tags:      toTagsRecordList(article.Tags),
+		Tools:     toTagsRecordList(article.Tools),
 	}
 }
 
@@ -71,7 +71,7 @@ func toArticleCore(article Content) contents.Core {
 		CreatedAt: article.CreatedAt,
 		UpdatedAt: article.UpdatedAt,
 		User:      toUserCore(article.User),
-		Tags:      toTagsCoreList(article.Tags),
+		Tools:     toTagsCoreList(article.Tools),
 	}
 }
 
@@ -83,8 +83,8 @@ func toUserCore(user User) contents.UserCore {
 	}
 }
 
-func toTagCore(tag Tool) contents.TagCore {
-	return contents.TagCore{
+func toTagCore(tag Tool) contents.ToolCore {
+	return contents.ToolCore{
 		ID:    tag.ID,
 		Title: tag.Title,
 	}
@@ -100,8 +100,8 @@ func toArticleCoreList(aList []Content) []contents.Core {
 	return convertedArticle
 }
 
-func toTagsCoreList(tList []Tool) []contents.TagCore {
-	convertedTag := []contents.TagCore{}
+func toTagsCoreList(tList []Tool) []contents.ToolCore {
+	convertedTag := []contents.ToolCore{}
 
 	for _, tag := range tList {
 		convertedTag = append(convertedTag, toTagCore(tag))
@@ -110,7 +110,7 @@ func toTagsCoreList(tList []Tool) []contents.TagCore {
 	return convertedTag
 }
 
-func toTagsRecordList(tList []contents.TagCore) []Tool {
+func toTagsRecordList(tList []contents.ToolCore) []Tool {
 	convertedUser := []Tool{}
 
 	for _, tag := range tList {

@@ -17,7 +17,7 @@ func NewMysqlArticleRepository(conn *gorm.DB) contents.Data {
 	}
 }
 
-func (ar *mysqlArticleRepository) CreateTags(tags []contents.TagCore) ([]contents.TagCore, error) {
+func (ar *mysqlArticleRepository) CreateTags(tags []contents.ToolCore) ([]contents.ToolCore, error) {
 	tagsTitle := make([]string, 0, len(tags))
 	articleTags := []Tool{}
 	for _, tag := range tags {
@@ -25,23 +25,23 @@ func (ar *mysqlArticleRepository) CreateTags(tags []contents.TagCore) ([]content
 		if err != nil {
 			err := ar.Conn.Create(&Tool{Title: tag.Title}).Error
 			if err != nil {
-				return []contents.TagCore{}, err
+				return []contents.ToolCore{}, err
 			}
 		}
 		tagsTitle = append(tagsTitle, tag.Title)
 	}
 	err := ar.Conn.Where("title IN ?", tagsTitle).Find(&articleTags).Error
 	if err != nil {
-		return []contents.TagCore{}, err
+		return []contents.ToolCore{}, err
 	}
 	return toTagsCoreList(articleTags), nil
 
 }
 
-func (ar *mysqlArticleRepository) CreateArticle(data contents.Core, userId int, tags []contents.TagCore) error {
+func (ar *mysqlArticleRepository) CreateArticle(data contents.Core, userId int, tools []contents.ToolCore) error {
 
 	data.UserId = userId
-	data.Tags = tags
+	data.Tools = tools
 
 	recordData := toArticleRecord(data)
 	err := ar.Conn.Create(&recordData).Error
@@ -54,7 +54,7 @@ func (ar *mysqlArticleRepository) CreateArticle(data contents.Core, userId int, 
 func (ar *mysqlArticleRepository) GetAllArticles() ([]contents.Core, error) {
 
 	articles := []Content{}
-	err := ar.Conn.Joins("User").Preload("Tags").Find(&articles).Error
+	err := ar.Conn.Joins("User").Preload("Tools").Find(&articles).Error
 	if err != nil {
 		return toArticleCoreList([]Content{}), err
 	}
@@ -64,7 +64,7 @@ func (ar *mysqlArticleRepository) GetAllArticles() ([]contents.Core, error) {
 func (ar *mysqlArticleRepository) GetArticleById(articleId int) (contents.Core, error) {
 
 	article := Content{}
-	err := ar.Conn.Joins("User").Preload("Tags").First(&article, articleId).Error
+	err := ar.Conn.Joins("User").Preload("Tools").First(&article, articleId).Error
 	if err != nil {
 		return toArticleCore(Content{}), err
 	}
@@ -104,7 +104,7 @@ func (ar *mysqlArticleRepository) VerifyArticleOwner(articleId int, userId int) 
 func (ar *mysqlArticleRepository) GetAllUserArticles(userId int) ([]contents.Core, error) {
 
 	articles := []Content{}
-	err := ar.Conn.Joins("User").Preload("Tags").Where("user_id = ?", userId).Find(&articles).Error
+	err := ar.Conn.Joins("User").Preload("Tools").Where("user_id = ?", userId).Find(&articles).Error
 	if err != nil {
 		return toArticleCoreList([]Content{}), err
 	}

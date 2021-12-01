@@ -12,7 +12,7 @@ type ArticleResponse struct {
 	Content   string       `json:"content"`
 	CreatedAt time.Time    `json:"created_at"`
 	UpdatedAt time.Time    `json:"updated_at"`
-	Tags      []string     `json:"tools"`
+	Tools     []string     `json:"tools"`
 	User      UserResponse `json:"user"`
 }
 
@@ -31,7 +31,7 @@ func ToArticleResponse(article contents.Core) ArticleResponse {
 		CreatedAt: article.CreatedAt,
 		UpdatedAt: article.UpdatedAt,
 		User:      toUserResponse(article.User),
-		Tags:      toTagsResponse(article.Tags),
+		Tools:     toTagsResponse(article.Tools),
 	}
 }
 
@@ -43,7 +43,7 @@ func toUserResponse(article contents.UserCore) UserResponse {
 	}
 }
 
-func toTagsResponse(tags []contents.TagCore) []string {
+func toTagsResponse(tags []contents.ToolCore) []string {
 	convertedTags := make([]string, 0, len(tags))
 	for _, v := range tags {
 		convertedTags = append(convertedTags, v.Title)
