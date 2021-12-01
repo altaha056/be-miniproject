@@ -13,7 +13,7 @@ func AutoMigrate() {
 	db.DB.AutoMigrate(
 		&users.User{},
 		&auth.Authentication{},
-		&contents.Article{},
+		&contents.Content{},
 		&contents.Tag{},
 		&appreciate.Rating{},
 		&comments.Comment{},

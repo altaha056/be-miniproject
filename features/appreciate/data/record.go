@@ -11,12 +11,12 @@ import (
 type Rating struct {
 	gorm.Model
 	ArticleID int
-	Article   Article
+	Article   Content
 	UserID    int
 	User      User
 }
 
-type Article struct {
+type Content struct {
 	gorm.Model
 	ID        int
 	Title     string
@@ -64,8 +64,8 @@ func toTagRecord(tag contents.TagCore) Tag {
 	}
 }
 
-func toArticleRecord(article contents.Core) Article {
-	return Article{
+func toArticleRecord(article contents.Core) Content {
+	return Content{
 		ID:        article.ID,
 		Title:     article.Title,
 		Image:     article.Image,
@@ -78,7 +78,7 @@ func toArticleRecord(article contents.Core) Article {
 	}
 }
 
-func toArticleCore(article Article) appreciate.ArticleCore {
+func toArticleCore(article Content) appreciate.ArticleCore {
 	return appreciate.ArticleCore{
 		ID:        article.ID,
 		Title:     article.Title,

@@ -53,20 +53,20 @@ func (ar *mysqlArticleRepository) CreateArticle(data contents.Core, userId int, 
 
 func (ar *mysqlArticleRepository) GetAllArticles() ([]contents.Core, error) {
 
-	articles := []Article{}
+	articles := []Content{}
 	err := ar.Conn.Joins("User").Preload("Tags").Find(&articles).Error
 	if err != nil {
-		return toArticleCoreList([]Article{}), err
+		return toArticleCoreList([]Content{}), err
 	}
 	return toArticleCoreList(articles), nil
 }
 
 func (ar *mysqlArticleRepository) GetArticleById(articleId int) (contents.Core, error) {
 
-	article := Article{}
+	article := Content{}
 	err := ar.Conn.Joins("User").Preload("Tags").First(&article, articleId).Error
 	if err != nil {
-		return toArticleCore(Article{}), err
+		return toArticleCore(Content{}), err
 	}
 	return toArticleCore(article), nil
 }
@@ -84,7 +84,7 @@ func (ar *mysqlArticleRepository) UpdateArticleById(articleId int, data contents
 
 func (ar *mysqlArticleRepository) DeleteArticleById(articleId int) error {
 
-	err := ar.Conn.Delete(&Article{}, articleId).Error
+	err := ar.Conn.Delete(&Content{}, articleId).Error
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func (ar *mysqlArticleRepository) DeleteArticleById(articleId int) error {
 func (ar *mysqlArticleRepository) VerifyArticleOwner(articleId int, userId int) error {
 
 	fmt.Print(articleId, userId)
-	err := ar.Conn.Where("id = ? AND user_id = ?", articleId, userId).First(&Article{}).Error
+	err := ar.Conn.Where("id = ? AND user_id = ?", articleId, userId).First(&Content{}).Error
 	if err != nil {
 		return err
 	}
@@ -103,10 +103,10 @@ func (ar *mysqlArticleRepository) VerifyArticleOwner(articleId int, userId int) 
 
 func (ar *mysqlArticleRepository) GetAllUserArticles(userId int) ([]contents.Core, error) {
 
-	articles := []Article{}
+	articles := []Content{}
 	err := ar.Conn.Joins("User").Preload("Tags").Where("user_id = ?", userId).Find(&articles).Error
 	if err != nil {
-		return toArticleCoreList([]Article{}), err
+		return toArticleCoreList([]Content{}), err
 	}
 	return toArticleCoreList(articles), nil
 }

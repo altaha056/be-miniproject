@@ -15,12 +15,12 @@ type Comment struct {
 	UserID    int
 	User      User
 	ArticleID int
-	Article   Article
+	Article   Content
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-type Article struct {
+type Content struct {
 	gorm.Model
 	ID        int
 	Title     string

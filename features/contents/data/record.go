@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Article struct {
+type Content struct {
 	gorm.Model
 	ID        int
 	Title     string
@@ -48,8 +48,8 @@ func toTagRecord(tag contents.TagCore) Tag {
 	}
 }
 
-func toArticleRecord(article contents.Core) Article {
-	return Article{
+func toArticleRecord(article contents.Core) Content {
+	return Content{
 		ID:        article.ID,
 		Title:     article.Title,
 		Image:     article.Image,
@@ -62,7 +62,7 @@ func toArticleRecord(article contents.Core) Article {
 	}
 }
 
-func toArticleCore(article Article) contents.Core {
+func toArticleCore(article Content) contents.Core {
 	return contents.Core{
 		ID:        article.ID,
 		Title:     article.Title,
@@ -90,7 +90,7 @@ func toTagCore(tag Tag) contents.TagCore {
 	}
 }
 
-func toArticleCoreList(aList []Article) []contents.Core {
+func toArticleCoreList(aList []Content) []contents.Core {
 	convertedArticle := []contents.Core{}
 
 	for _, article := range aList {
