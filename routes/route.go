@@ -30,7 +30,7 @@ func New() *echo.Echo {
 
 	e.GET("/user", presenter.UserHandler.GetAllUsersHandler)
 	e.GET("/user/:userId", presenter.UserHandler.GetUserByIdHandler)
-	e.GET("/user/:userId/likes", presenter.ArticleLikesHandler.GetLikedArticles)
+	e.GET("/user/:userId/likes", presenter.AppreciateHandler.GetLikedArticles)
 	e.GET("/user/:userId/articles", presenter.ArticleHandler.GetAllUserArticlesHandler)
 
 
@@ -41,9 +41,9 @@ func New() *echo.Echo {
 	e.DELETE("/content/:articleId", presenter.ArticleHandler.DeleteArticleByIdHandler, middleware.JWTWithConfig(configJWT))
 	
 	
-	e.GET("/content/:articleId/likes", presenter.ArticleLikesHandler.GetLikingUsers)
-	e.PUT("/content/:articleId/likes", presenter.ArticleLikesHandler.LikeArticle, middleware.JWTWithConfig(configJWT))
-	e.DELETE("/content/:articleId/likes", presenter.ArticleLikesHandler.UnlikeArticle, middleware.JWTWithConfig(configJWT))
+	e.GET("/content/:articleId/likes", presenter.AppreciateHandler.GetLikingUsers)
+	e.PUT("/content/:articleId/likes", presenter.AppreciateHandler.LikeArticle, middleware.JWTWithConfig(configJWT))
+	e.DELETE("/content/:articleId/likes", presenter.AppreciateHandler.UnlikeArticle, middleware.JWTWithConfig(configJWT))
 	
 
 	e.GET("/content/:articleId/comments", presenter.CommentHandler.GetArticleComments)

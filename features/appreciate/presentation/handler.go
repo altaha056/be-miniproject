@@ -12,10 +12,10 @@ import (
 )
 
 type ArticleLikesHandler struct {
-	ArticleLikesBusiness likes.Business
+	ArticleLikesBusiness appreciate.Business
 }
 
-func NewArticleLikesHandler(articleLikesBusiness likes.Business) *ArticleLikesHandler {
+func NewArticleLikesHandler(articleLikesBusiness appreciate.Business) *ArticleLikesHandler {
 	return &ArticleLikesHandler{ArticleLikesBusiness: articleLikesBusiness}
 }
 
@@ -24,28 +24,24 @@ func (uh *ArticleLikesHandler) LikeArticle(e echo.Context) error {
 	articleId, err := strconv.Atoi(e.Param("articleId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "upvote failed",
 			"err":     err.Error(),
 		})
 	}
 	userId, err := middlewares.VerifyAccessToken(e)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "upvote failed",
 			"err":     err.Error(),
 		})
 	}
-	err = uh.ArticleLikesBusiness.LikeArticle(articleId, userId)
+	err = uh.ArticleLikesBusiness.Upvote(articleId, userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "upvote failed",
 			"err":     err.Error(),
 		})
 	}
 
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"status":  "upvoted!",
-		"message": "like article",
 	})
 }
 
@@ -53,21 +49,18 @@ func (uh *ArticleLikesHandler) UnlikeArticle(e echo.Context) error {
 	articleId, err := strconv.Atoi(e.Param("articleId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"status":  "downvote failed",
 			"err":     err.Error(),
 		})
 	}
 	userId, err := middlewares.VerifyAccessToken(e)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "downvote failed",
 			"err":     err.Error(),
 		})
 	}
-	err = uh.ArticleLikesBusiness.UnlikeArticle(articleId, userId)
+	err = uh.ArticleLikesBusiness.Downvote(articleId, userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "downvote failed",
 			"err":     err.Error(),
 		})
 	}
@@ -85,7 +78,7 @@ func (alh *ArticleLikesHandler) GetLikedArticles(e echo.Context) error {
 			"err":     err.Error(),
 		})
 	}
-	data, err := alh.ArticleLikesBusiness.GetLikedArticles(userId)
+	data, err := alh.ArticleLikesBusiness.Rating(userId)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"err":     err.Error(),
@@ -106,7 +99,7 @@ func (alh *ArticleLikesHandler) GetLikingUsers(e echo.Context) error {
 			"err":     err.Error(),
 		})
 	}
-	data, err := alh.ArticleLikesBusiness.GetLikingUsers(articleId)
+	data, err := alh.ArticleLikesBusiness.WhoVote(articleId)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"err":     err.Error(),

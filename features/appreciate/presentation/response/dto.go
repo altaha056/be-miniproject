@@ -22,7 +22,7 @@ type UserResponse struct {
 	Username string `json:"Username"`
 }
 
-func ToArticleResponse(article likes.ArticleCore) ArticleResponse {
+func ToArticleResponse(article appreciate.ArticleCore) ArticleResponse {
 	return ArticleResponse{
 		ID:        article.ID,
 		Title:     article.Title,
@@ -35,7 +35,7 @@ func ToArticleResponse(article likes.ArticleCore) ArticleResponse {
 	}
 }
 
-func toUserResponse(article likes.UserCore) UserResponse {
+func toUserResponse(article appreciate.UserCore) UserResponse {
 	return UserResponse{
 		ID:       article.ID,
 		Email:    article.Email,
@@ -43,7 +43,7 @@ func toUserResponse(article likes.UserCore) UserResponse {
 	}
 }
 
-func toTagsResponse(tags []likes.TagCore) []string {
+func toTagsResponse(tags []appreciate.TagCore) []string {
 	convertedTags := make([]string, 0, len(tags))
 	for _, v := range tags {
 		convertedTags = append(convertedTags, v.Title)
@@ -51,7 +51,7 @@ func toTagsResponse(tags []likes.TagCore) []string {
 	return convertedTags
 }
 
-func ToArticleResponseList(articleList []likes.ArticleCore) []ArticleResponse {
+func ToArticleResponseList(articleList []appreciate.ArticleCore) []ArticleResponse {
 	convertedArticle := []ArticleResponse{}
 	for _, article := range articleList {
 		convertedArticle = append(convertedArticle, ToArticleResponse(article))
@@ -60,7 +60,7 @@ func ToArticleResponseList(articleList []likes.ArticleCore) []ArticleResponse {
 	return convertedArticle
 }
 
-func ToUserResponseList(userList []likes.UserCore) []UserResponse {
+func ToUserResponseList(userList []appreciate.UserCore) []UserResponse {
 	convertedArticle := []UserResponse{}
 	for _, user := range userList {
 		convertedArticle = append(convertedArticle, toUserResponse(user))

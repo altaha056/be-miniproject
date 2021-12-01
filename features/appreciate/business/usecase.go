@@ -5,31 +5,31 @@ import (
 )
 
 type articleLikesUsecase struct {
-	LikeData likes.Data
+	LikeData appreciate.Data
 }
 
-func NewArticleLikesBusiness(articleLikesData likes.Data) likes.Business {
+func NewArticleLikesBusiness(articleLikesData appreciate.Data) appreciate.Business {
 	return &articleLikesUsecase{LikeData: articleLikesData}
 }
 
-func (alu *articleLikesUsecase) LikeArticle(articleId, userId int) error {
-	err := alu.LikeData.LikeArticle(articleId, userId)
+func (alu *articleLikesUsecase) Upvote(articleId, userId int) error {
+	err := alu.LikeData.Upvote(articleId, userId)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (alu *articleLikesUsecase) UnlikeArticle(articleId, userId int) error {
-	err := alu.LikeData.UnlikeArticle(articleId, userId)
+func (alu *articleLikesUsecase) Downvote(articleId, userId int) error {
+	err := alu.LikeData.Downvote(articleId, userId)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (alu *articleLikesUsecase) GetLikedArticles(userId int) ([]likes.ArticleCore, error) {
-	articles, err := alu.LikeData.GetLikedArticles(userId)
+func (alu *articleLikesUsecase) Rating(userId int) ([]appreciate.ArticleCore, error) {
+	articles, err := alu.LikeData.Rating(userId)
 	if err != nil {
 		return nil, err
 	}
@@ -37,8 +37,8 @@ func (alu *articleLikesUsecase) GetLikedArticles(userId int) ([]likes.ArticleCor
 	return articles, nil
 }
 
-func (alu *articleLikesUsecase) GetLikingUsers(articleId int) ([]likes.UserCore, error) {
-	users, err := alu.LikeData.GetLikingUsers(articleId)
+func (alu *articleLikesUsecase) WhoVote(articleId int) ([]appreciate.UserCore, error) {
+	users, err := alu.LikeData.WhoVote(articleId)
 	if err != nil {
 		return nil, err
 	}

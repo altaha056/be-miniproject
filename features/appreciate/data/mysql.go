@@ -11,14 +11,14 @@ type mysqlArticleLikesRepository struct {
 	Conn *gorm.DB
 }
 
-func NewMysqlArticleLikesRepository(conn *gorm.DB) likes.Data {
+func NewMysqlArticleLikesRepository(conn *gorm.DB) appreciate.Data {
 	return &mysqlArticleLikesRepository{
 		Conn: conn,
 	}
 }
 
-func (alr *mysqlArticleLikesRepository) LikeArticle(articleId, userId int) error {
-	articleLikes := toArticleLikesRecord(likes.Core{
+func (alr *mysqlArticleLikesRepository) Upvote(articleId, userId int) error {
+	articleLikes := toArticleLikesRecord(appreciate.Core{
 		ArticleId: articleId,
 		UserId:    userId,
 	})
@@ -34,31 +34,31 @@ func (alr *mysqlArticleLikesRepository) LikeArticle(articleId, userId int) error
 
 }
 
-func (alr *mysqlArticleLikesRepository) UnlikeArticle(articleId, userId int) error {
+func (alr *mysqlArticleLikesRepository) Downvote(articleId, userId int) error {
 
-	err := alr.Conn.Where("article_id = ? AND user_id = ?", articleId, userId).Delete(&ArticleLikes{}).Error
+	err := alr.Conn.Where("article_id = ? AND user_id = ?", articleId, userId).Delete(&Rating{}).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (alr *mysqlArticleLikesRepository) GetLikingUsers(articleId int) ([]likes.UserCore, error) {
+func (alr *mysqlArticleLikesRepository) WhoVote(articleId int) ([]appreciate.UserCore, error) {
 
-	var articleLikes []ArticleLikes
-	err := alr.Conn.Preload(clause.Associations).Joins("User").Where("article_likes.article_id = ?", articleId).Find(&articleLikes).Error
+	var articleLikes []Rating
+	err := alr.Conn.Preload(clause.Associations).Joins("User").Where("ratings.article_id = ?", articleId).Find(&articleLikes).Error
 	if err != nil {
-		return []likes.UserCore{}, err
+		return []appreciate.UserCore{}, err
 	}
 	return toUserCoreList(articleLikes), nil
 }
 
-func (alr *mysqlArticleLikesRepository) GetLikedArticles(userId int) ([]likes.ArticleCore, error) {
+func (alr *mysqlArticleLikesRepository) Rating(userId int) ([]appreciate.ArticleCore, error) {
 
-	var articleLikes []ArticleLikes
-	err := alr.Conn.Preload(clause.Associations).Joins("Article").Where("article_likes.user_id = ?", userId).Find(&articleLikes).Error
+	var articleLikes []Rating
+	err := alr.Conn.Preload(clause.Associations).Joins("Article").Where("ratings.user_id = ?", userId).Find(&articleLikes).Error
 	if err != nil {
-		return []likes.ArticleCore{}, err
+		return []appreciate.ArticleCore{}, err
 	}
 	return toArticleCoreList(articleLikes), nil
 }

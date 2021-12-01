@@ -5,7 +5,7 @@ import (
 	articles "antonio/features/articles/data"
 	auth "antonio/features/authentication/data"
 	comments "antonio/features/comments/data"
-	likes "antonio/features/likes/data"
+	appreciate "antonio/features/appreciate/data"
 	users "antonio/features/users/data"
 )
 
@@ -15,7 +15,7 @@ func AutoMigrate() {
 		&auth.Authentication{},
 		&articles.Article{},
 		&articles.Tag{},
-		&likes.ArticleLikes{},
+		&appreciate.Rating{},
 		&comments.Comment{},
 	)
 }

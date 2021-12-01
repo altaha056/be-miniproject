@@ -19,9 +19,9 @@ import (
 	articlePresentation "antonio/features/articles/presentation"
 
 	// likes domain
-	articleLikesBusiness "antonio/features/likes/business"
-	articleLikesData "antonio/features/likes/data"
-	articleLikesPresentation "antonio/features/likes/presentation"
+	appreciateBusiness "antonio/features/appreciate/business"
+	appreciateData "antonio/features/appreciate/data"
+	appreciatePresentation "antonio/features/appreciate/presentation"
 
 	// comments domain
 	commentsBusiness "antonio/features/comments/business"
@@ -33,7 +33,7 @@ type Presenter struct {
 	AuthHandler         authPresentation.AuthHandler
 	UserHandler         userPresentation.UserHandler
 	ArticleHandler      articlePresentation.ArticleHandler
-	ArticleLikesHandler articleLikesPresentation.ArticleLikesHandler
+	AppreciateHandler 	appreciatePresentation.ArticleLikesHandler
 	CommentHandler      commentsPresentation.CommentHandler
 }
 
@@ -54,9 +54,9 @@ func Init() Presenter {
 	articlePresentation := articlePresentation.NewArticleHandler(articleBusiness)
 
 	// article likes layer
-	articleLikesData := articleLikesData.NewMysqlArticleLikesRepository(db.DB)
-	articleLikesBusiness := articleLikesBusiness.NewArticleLikesBusiness(articleLikesData)
-	articleLikesPresentation := articleLikesPresentation.NewArticleLikesHandler(articleLikesBusiness)
+	appreciateData := appreciateData.NewMysqlArticleLikesRepository(db.DB)
+	appreciateBusiness := appreciateBusiness.NewArticleLikesBusiness(appreciateData)
+	appreciatePresentation := appreciatePresentation.NewArticleLikesHandler(appreciateBusiness)
 
 	// comments layer
 	commentsData := commentsData.NewMysqlCommentsRepository(db.DB)
@@ -67,7 +67,7 @@ func Init() Presenter {
 		AuthHandler:         *authPresentation,
 		UserHandler:         *userPresentation,
 		ArticleHandler:      *articlePresentation,
-		ArticleLikesHandler: *articleLikesPresentation,
+		AppreciateHandler: 	 *appreciatePresentation,
 		CommentHandler:      *commentsPresentation,
 	}
 }
