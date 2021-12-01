@@ -42,7 +42,7 @@ type Tag struct {
 	Title string `gorm:"unique"`
 }
 
-func toArticleLikesRecord(data appreciate.Core) Rating {
+func toRatingRecord(data appreciate.Core) Rating {
 	return Rating{
 		UserID:    data.UserId,
 		ArticleID: data.ArticleId,
