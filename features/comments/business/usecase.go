@@ -4,15 +4,15 @@ import (
 	"antonio/features/comments"
 )
 
-type articleLikesUsecase struct {
+type commentUsecase struct {
 	CommentData comments.Data
 }
 
 func NewCommentsBusiness(articleLikesData comments.Data) comments.Business {
-	return &articleLikesUsecase{CommentData: articleLikesData}
+	return &commentUsecase{CommentData: articleLikesData}
 }
 
-func (alu *articleLikesUsecase) AddComment(content string, articleId, userId int) error {
+func (alu *commentUsecase) AddComment(content string, articleId, userId int) error {
 	err := alu.CommentData.AddComment(content, articleId, userId)
 	if err != nil {
 		return err
@@ -20,7 +20,7 @@ func (alu *articleLikesUsecase) AddComment(content string, articleId, userId int
 	return nil
 }
 
-func (alu *articleLikesUsecase) UpdateComment(content string, commentId, userId int) error {
+func (alu *commentUsecase) UpdateComment(content string, commentId, userId int) error {
 	err := alu.CommentData.VerifyCommentOwner(commentId, userId)
 	if err != nil {
 		return err
@@ -32,7 +32,7 @@ func (alu *articleLikesUsecase) UpdateComment(content string, commentId, userId 
 	return nil
 }
 
-func (alu *articleLikesUsecase) DeleteComment(commentId, userId int) error {
+func (alu *commentUsecase) DeleteComment(commentId, userId int) error {
 	err := alu.CommentData.VerifyCommentOwner(commentId, userId)
 	if err != nil {
 		return err
@@ -44,7 +44,7 @@ func (alu *articleLikesUsecase) DeleteComment(commentId, userId int) error {
 	return nil
 }
 
-func (alu *articleLikesUsecase) GetArticleComments(articleId int) ([]comments.Core, error) {
+func (alu *commentUsecase) GetArticleComments(articleId int) ([]comments.Core, error) {
 	data, err := alu.CommentData.GetArticleComments(articleId)
 	if err != nil {
 		return nil, err
