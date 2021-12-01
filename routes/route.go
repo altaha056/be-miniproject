@@ -25,8 +25,8 @@ func New() *echo.Echo {
 
 	e.GET("/user", presenter.UserHandler.GetAllUsersHandler)
 	e.GET("/user/:userId", presenter.UserHandler.GetUserByIdHandler)
-	e.GET("/user/:userId/likes", presenter.RatingHandler.Rating)
-	e.GET("/user/:userId/articles", presenter.ArticleHandler.GetAllUserArticlesHandler)
+	e.GET("/user/:userId/rating", presenter.RatingHandler.Rating)
+	e.GET("/user/:userId/content", presenter.ArticleHandler.GetAllUserArticlesHandler)
 
 
 	e.POST("/content", presenter.ArticleHandler.CreateArticleHandler, middleware.JWTWithConfig(configJWT))
