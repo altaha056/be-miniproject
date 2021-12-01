@@ -36,9 +36,9 @@ func New() *echo.Echo {
 	e.DELETE("/content/:contentId", presenter.ArticleHandler.DeleteArticleByIdHandler, middleware.JWTWithConfig(configJWT))
 	
 	
-	e.GET("/content/:contentId/likes", presenter.RatingHandler.WhoVote)
-	e.PUT("/content/:contentId/likes", presenter.RatingHandler.UpVote, middleware.JWTWithConfig(configJWT))
-	e.DELETE("/content/:contentId/likes", presenter.RatingHandler.DownVote, middleware.JWTWithConfig(configJWT))
+	e.GET("/content/:contentId/rating", presenter.RatingHandler.WhoVote)
+	e.PUT("/content/:contentId/upvote", presenter.RatingHandler.UpVote, middleware.JWTWithConfig(configJWT))
+	e.DELETE("/content/:contentId/downvote", presenter.RatingHandler.DownVote, middleware.JWTWithConfig(configJWT))
 	
 
 	e.GET("/content/:contentId/comments", presenter.CommentHandler.GetArticleComments)

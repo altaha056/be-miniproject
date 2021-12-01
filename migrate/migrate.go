@@ -14,7 +14,7 @@ func AutoMigrate() {
 		&users.User{},
 		&auth.Authentication{},
 		&contents.Content{},
-		&contents.Tag{},
+		&contents.Tool{},
 		&appreciate.Rating{},
 		&comments.Comment{},
 	)

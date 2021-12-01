@@ -12,7 +12,7 @@ type ArticleResponse struct {
 	Content   string       `json:"content"`
 	CreatedAt time.Time    `json:"created_at"`
 	UpdatedAt time.Time    `json:"updated_at"`
-	Tags      []string     `json:"tags"`
+	Tags      []string     `json:"tools"`
 	User      UserResponse `json:"user"`
 }
 

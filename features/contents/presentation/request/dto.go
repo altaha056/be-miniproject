@@ -8,7 +8,7 @@ type ArticleRequest struct {
 	Title   string   `json:"title"`
 	Image   string   `json:"image"`
 	Content string   `json:"content"`
-	Tags    []string `json:"tags"`
+	Tags    []string `json:"tools"`
 }
 
 func toTagCoreList(requestTagsData []string) []contents.TagCore {
