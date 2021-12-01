@@ -19,11 +19,6 @@ func New() *echo.Echo {
 
 	presenter := factory.Init()
 
-	// eAuth := e.Group("/auth")
-	// eAuth.PUT("", presenter.AuthHandler.ReLoginHandler)
-	// eAuth.DELETE("", presenter.AuthHandler.LogoutHandler)
-
-
 	e.POST("/user/login", presenter.AuthHandler.LoginHandler)
 	e.POST("/user/register", presenter.UserHandler.RegisterUserHandler)
 

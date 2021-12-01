@@ -1,18 +1,18 @@
 package business
 
 import (
-	"antonio/features/articles"
+	"antonio/features/contents"
 )
 
 type articleUsecase struct {
-	ArticleData articles.Data
+	ArticleData contents.Data
 }
 
-func NewArticleBusiness(articleData articles.Data) articles.Business {
+func NewArticleBusiness(articleData contents.Data) contents.Business {
 	return &articleUsecase{ArticleData: articleData}
 }
 
-func (uu *articleUsecase) CreateArticle(data articles.Core, userId int) error {
+func (uu *articleUsecase) CreateArticle(data contents.Core, userId int) error {
 	tags, err := uu.ArticleData.CreateTags(data.Tags)
 
 	if err != nil {
@@ -26,7 +26,7 @@ func (uu *articleUsecase) CreateArticle(data articles.Core, userId int) error {
 	return nil
 }
 
-func (uu *articleUsecase) GetAllArticles() ([]articles.Core, error) {
+func (uu *articleUsecase) GetAllArticles() ([]contents.Core, error) {
 	articles, err := uu.ArticleData.GetAllArticles()
 	if err != nil {
 		return nil, err
@@ -35,17 +35,17 @@ func (uu *articleUsecase) GetAllArticles() ([]articles.Core, error) {
 	return articles, nil
 }
 
-func (us *articleUsecase) GetArticleById(articleId int) (articles.Core, error) {
+func (us *articleUsecase) GetArticleById(articleId int) (contents.Core, error) {
 	articleData, err := us.ArticleData.GetArticleById(articleId)
 
 	if err != nil {
-		return articles.Core{}, err
+		return contents.Core{}, err
 	}
 
 	return articleData, nil
 }
 
-func (uu *articleUsecase) UpdateArticleById(articleId int, data articles.Core, userId int) error {
+func (uu *articleUsecase) UpdateArticleById(articleId int, data contents.Core, userId int) error {
 	err := uu.ArticleData.VerifyArticleOwner(articleId, userId)
 	if err != nil {
 		return err
@@ -72,7 +72,7 @@ func (uu *articleUsecase) DeleteArticleById(articleId, userId int) error {
 	return nil
 }
 
-func (uu *articleUsecase) GetAllUserArticles(userId int) ([]articles.Core, error) {
+func (uu *articleUsecase) GetAllUserArticles(userId int) ([]contents.Core, error) {
 	articles, err := uu.ArticleData.GetAllUserArticles(userId)
 	if err != nil {
 		return nil, err

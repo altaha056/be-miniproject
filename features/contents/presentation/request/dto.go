@@ -1,7 +1,7 @@
 package request
 
 import (
-	"antonio/features/articles"
+	"antonio/features/contents"
 )
 
 type ArticleRequest struct {
@@ -11,16 +11,16 @@ type ArticleRequest struct {
 	Tags    []string `json:"tags"`
 }
 
-func toTagCoreList(requestTagsData []string) []articles.TagCore {
-	convertedData := make([]articles.TagCore, 0, len(requestTagsData))
+func toTagCoreList(requestTagsData []string) []contents.TagCore {
+	convertedData := make([]contents.TagCore, 0, len(requestTagsData))
 	for _, v := range requestTagsData {
-		convertedData = append(convertedData, articles.TagCore{Title: v})
+		convertedData = append(convertedData, contents.TagCore{Title: v})
 	}
 	return convertedData
 }
 
-func (requestData *ArticleRequest) ToArticleCore() articles.Core {
-	return articles.Core{
+func (requestData *ArticleRequest) ToArticleCore() contents.Core {
+	return contents.Core{
 		Title:   requestData.Title,
 		Image:   requestData.Image,
 		Content: requestData.Content,

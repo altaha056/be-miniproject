@@ -14,9 +14,9 @@ import (
 	userPresentation "antonio/features/users/presentation"
 
 	// article domain
-	articleBusiness "antonio/features/articles/business"
-	articleData "antonio/features/articles/data"
-	articlePresentation "antonio/features/articles/presentation"
+	articleBusiness "antonio/features/contents/business"
+	articleData "antonio/features/contents/data"
+	articlePresentation "antonio/features/contents/presentation"
 
 	// appreciate domain
 	appreciateBusiness "antonio/features/appreciate/business"

@@ -1,7 +1,7 @@
 package data
 
 import (
-	"antonio/features/articles"
+	"antonio/features/contents"
 	"antonio/features/appreciate"
 	"time"
 
@@ -49,7 +49,7 @@ func toRatingRecord(data appreciate.Core) Rating {
 	}
 }
 
-func toUserRecord(user articles.UserCore) User {
+func toUserRecord(user contents.UserCore) User {
 	return User{
 		ID:       user.ID,
 		Email:    user.Email,
@@ -57,14 +57,14 @@ func toUserRecord(user articles.UserCore) User {
 	}
 }
 
-func toTagRecord(tag articles.TagCore) Tag {
+func toTagRecord(tag contents.TagCore) Tag {
 	return Tag{
 		ID:    tag.ID,
 		Title: tag.Title,
 	}
 }
 
-func toArticleRecord(article articles.Core) Article {
+func toArticleRecord(article contents.Core) Article {
 	return Article{
 		ID:        article.ID,
 		Title:     article.Title,
@@ -135,7 +135,7 @@ func toTagsCoreList(tList []Tag) []appreciate.TagCore {
 	return convertedTag
 }
 
-func toTagsRecordList(tList []articles.TagCore) []Tag {
+func toTagsRecordList(tList []contents.TagCore) []Tag {
 	convertedUser := []Tag{}
 
 	for _, tag := range tList {

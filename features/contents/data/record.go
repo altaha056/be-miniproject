@@ -1,7 +1,7 @@
 package data
 
 import (
-	"antonio/features/articles"
+	"antonio/features/contents"
 	"time"
 
 	"gorm.io/gorm"
@@ -33,7 +33,7 @@ type Tag struct {
 	Title string `gorm:"unique"`
 }
 
-func toUserRecord(user articles.UserCore) User {
+func toUserRecord(user contents.UserCore) User {
 	return User{
 		ID:       user.ID,
 		Email:    user.Email,
@@ -41,14 +41,14 @@ func toUserRecord(user articles.UserCore) User {
 	}
 }
 
-func toTagRecord(tag articles.TagCore) Tag {
+func toTagRecord(tag contents.TagCore) Tag {
 	return Tag{
 		ID:    tag.ID,
 		Title: tag.Title,
 	}
 }
 
-func toArticleRecord(article articles.Core) Article {
+func toArticleRecord(article contents.Core) Article {
 	return Article{
 		ID:        article.ID,
 		Title:     article.Title,
@@ -62,8 +62,8 @@ func toArticleRecord(article articles.Core) Article {
 	}
 }
 
-func toArticleCore(article Article) articles.Core {
-	return articles.Core{
+func toArticleCore(article Article) contents.Core {
+	return contents.Core{
 		ID:        article.ID,
 		Title:     article.Title,
 		Image:     article.Image,
@@ -75,23 +75,23 @@ func toArticleCore(article Article) articles.Core {
 	}
 }
 
-func toUserCore(user User) articles.UserCore {
-	return articles.UserCore{
+func toUserCore(user User) contents.UserCore {
+	return contents.UserCore{
 		ID:       user.ID,
 		Email:    user.Email,
 		Username: user.Username,
 	}
 }
 
-func toTagCore(tag Tag) articles.TagCore {
-	return articles.TagCore{
+func toTagCore(tag Tag) contents.TagCore {
+	return contents.TagCore{
 		ID:    tag.ID,
 		Title: tag.Title,
 	}
 }
 
-func toArticleCoreList(aList []Article) []articles.Core {
-	convertedArticle := []articles.Core{}
+func toArticleCoreList(aList []Article) []contents.Core {
+	convertedArticle := []contents.Core{}
 
 	for _, article := range aList {
 		convertedArticle = append(convertedArticle, toArticleCore(article))
@@ -100,8 +100,8 @@ func toArticleCoreList(aList []Article) []articles.Core {
 	return convertedArticle
 }
 
-func toTagsCoreList(tList []Tag) []articles.TagCore {
-	convertedTag := []articles.TagCore{}
+func toTagsCoreList(tList []Tag) []contents.TagCore {
+	convertedTag := []contents.TagCore{}
 
 	for _, tag := range tList {
 		convertedTag = append(convertedTag, toTagCore(tag))
@@ -110,7 +110,7 @@ func toTagsCoreList(tList []Tag) []articles.TagCore {
 	return convertedTag
 }
 
-func toTagsRecordList(tList []articles.TagCore) []Tag {
+func toTagsRecordList(tList []contents.TagCore) []Tag {
 	convertedUser := []Tag{}
 
 	for _, tag := range tList {

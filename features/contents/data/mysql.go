@@ -2,7 +2,7 @@ package data
 
 import (
 	"fmt"
-	"antonio/features/articles"
+	"antonio/features/contents"
 
 	"gorm.io/gorm"
 )
@@ -11,13 +11,13 @@ type mysqlArticleRepository struct {
 	Conn *gorm.DB
 }
 
-func NewMysqlArticleRepository(conn *gorm.DB) articles.Data {
+func NewMysqlArticleRepository(conn *gorm.DB) contents.Data {
 	return &mysqlArticleRepository{
 		Conn: conn,
 	}
 }
 
-func (ar *mysqlArticleRepository) CreateTags(tags []articles.TagCore) ([]articles.TagCore, error) {
+func (ar *mysqlArticleRepository) CreateTags(tags []contents.TagCore) ([]contents.TagCore, error) {
 	tagsTitle := make([]string, 0, len(tags))
 	articleTags := []Tag{}
 	for _, tag := range tags {
@@ -25,20 +25,20 @@ func (ar *mysqlArticleRepository) CreateTags(tags []articles.TagCore) ([]article
 		if err != nil {
 			err := ar.Conn.Create(&Tag{Title: tag.Title}).Error
 			if err != nil {
-				return []articles.TagCore{}, err
+				return []contents.TagCore{}, err
 			}
 		}
 		tagsTitle = append(tagsTitle, tag.Title)
 	}
 	err := ar.Conn.Where("title IN ?", tagsTitle).Find(&articleTags).Error
 	if err != nil {
-		return []articles.TagCore{}, err
+		return []contents.TagCore{}, err
 	}
 	return toTagsCoreList(articleTags), nil
 
 }
 
-func (ar *mysqlArticleRepository) CreateArticle(data articles.Core, userId int, tags []articles.TagCore) error {
+func (ar *mysqlArticleRepository) CreateArticle(data contents.Core, userId int, tags []contents.TagCore) error {
 
 	data.UserId = userId
 	data.Tags = tags
@@ -51,7 +51,7 @@ func (ar *mysqlArticleRepository) CreateArticle(data articles.Core, userId int, 
 	return nil
 }
 
-func (ar *mysqlArticleRepository) GetAllArticles() ([]articles.Core, error) {
+func (ar *mysqlArticleRepository) GetAllArticles() ([]contents.Core, error) {
 
 	articles := []Article{}
 	err := ar.Conn.Joins("User").Preload("Tags").Find(&articles).Error
@@ -61,7 +61,7 @@ func (ar *mysqlArticleRepository) GetAllArticles() ([]articles.Core, error) {
 	return toArticleCoreList(articles), nil
 }
 
-func (ar *mysqlArticleRepository) GetArticleById(articleId int) (articles.Core, error) {
+func (ar *mysqlArticleRepository) GetArticleById(articleId int) (contents.Core, error) {
 
 	article := Article{}
 	err := ar.Conn.Joins("User").Preload("Tags").First(&article, articleId).Error
@@ -71,7 +71,7 @@ func (ar *mysqlArticleRepository) GetArticleById(articleId int) (articles.Core, 
 	return toArticleCore(article), nil
 }
 
-func (ar *mysqlArticleRepository) UpdateArticleById(articleId int, data articles.Core) error {
+func (ar *mysqlArticleRepository) UpdateArticleById(articleId int, data contents.Core) error {
 
 	article := toArticleRecord(data)
 	article.ID = articleId
@@ -101,7 +101,7 @@ func (ar *mysqlArticleRepository) VerifyArticleOwner(articleId int, userId int) 
 	return nil
 }
 
-func (ar *mysqlArticleRepository) GetAllUserArticles(userId int) ([]articles.Core, error) {
+func (ar *mysqlArticleRepository) GetAllUserArticles(userId int) ([]contents.Core, error) {
 
 	articles := []Article{}
 	err := ar.Conn.Joins("User").Preload("Tags").Where("user_id = ?", userId).Find(&articles).Error

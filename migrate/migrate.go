@@ -2,7 +2,7 @@ package migrate
 
 import (
 	"antonio/db"
-	articles "antonio/features/articles/data"
+	articles "antonio/features/contents/data"
 	auth "antonio/features/authentication/data"
 	comments "antonio/features/comments/data"
 	appreciate "antonio/features/appreciate/data"

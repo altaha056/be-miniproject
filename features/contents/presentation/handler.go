@@ -2,9 +2,9 @@ package presentation
 
 import (
 	"net/http"
-	"antonio/features/articles"
-	"antonio/features/articles/presentation/request"
-	"antonio/features/articles/presentation/response"
+	"antonio/features/contents"
+	"antonio/features/contents/presentation/request"
+	"antonio/features/contents/presentation/response"
 	"antonio/middlewares"
 
 	"strconv"
@@ -13,10 +13,10 @@ import (
 )
 
 type ArticleHandler struct {
-	ArticleBusiness articles.Business
+	ArticleBusiness contents.Business
 }
 
-func NewArticleHandler(articleBusiness articles.Business) *ArticleHandler {
+func NewArticleHandler(articleBusiness contents.Business) *ArticleHandler {
 	return &ArticleHandler{ArticleBusiness: articleBusiness}
 }
 

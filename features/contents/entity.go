@@ -1,4 +1,4 @@
-package articles
+package contents
 
 import "time"
 

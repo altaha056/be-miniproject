@@ -1,7 +1,7 @@
 package response
 
 import (
-	"antonio/features/articles"
+	"antonio/features/contents"
 	"time"
 )
 
@@ -22,7 +22,7 @@ type UserResponse struct {
 	Username string `json:"username"`
 }
 
-func ToArticleResponse(article articles.Core) ArticleResponse {
+func ToArticleResponse(article contents.Core) ArticleResponse {
 	return ArticleResponse{
 		ID:        article.ID,
 		Title:     article.Title,
@@ -35,7 +35,7 @@ func ToArticleResponse(article articles.Core) ArticleResponse {
 	}
 }
 
-func toUserResponse(article articles.UserCore) UserResponse {
+func toUserResponse(article contents.UserCore) UserResponse {
 	return UserResponse{
 		ID:       article.ID,
 		Email:    article.Email,
@@ -43,7 +43,7 @@ func toUserResponse(article articles.UserCore) UserResponse {
 	}
 }
 
-func toTagsResponse(tags []articles.TagCore) []string {
+func toTagsResponse(tags []contents.TagCore) []string {
 	convertedTags := make([]string, 0, len(tags))
 	for _, v := range tags {
 		convertedTags = append(convertedTags, v.Title)
@@ -51,7 +51,7 @@ func toTagsResponse(tags []articles.TagCore) []string {
 	return convertedTags
 }
 
-func ToArticleResponseList(articleList []articles.Core) []ArticleResponse {
+func ToArticleResponseList(articleList []contents.Core) []ArticleResponse {
 	convertedArticle := []ArticleResponse{}
 	for _, article := range articleList {
 		convertedArticle = append(convertedArticle, ToArticleResponse(article))
