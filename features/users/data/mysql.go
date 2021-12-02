@@ -50,29 +50,3 @@ func (ur *mysqlUserRepository) GetUserById(userId int) (users.Core, error) {
 	return toUserCore(user), nil
 
 }
-
-// func (ur *mysqlUserRepository) GetUserFollowingById(userId int) ([]users.Core, error) {
-// 	var usersFollowing []User
-
-// 	err := ur.Conn.Raw("SELECT users.id, users.email, users.fullname, users.image FROM follows LEFT JOIN users ON follows.following_user_id = users.id WHERE follows.followers_user_id = ?", userId).Scan(&usersFollowing).Error
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	return toUserCoreList(usersFollowing), nil
-
-// }
-
-// func (ur *mysqlUserRepository) GetUserFollowersById(userId int) ([]users.Core, error) {
-
-// 	var usersFollowers []User
-
-// 	err := ur.Conn.Raw("SELECT users.id, users.email, users.fullname, users.image FROM follows LEFT JOIN users ON follows.followers_user_id = users.id WHERE follows.following_user_id = ?", userId).Scan(&usersFollowers).Error
-
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	return toUserCoreList(usersFollowers), nil
-
-// }

@@ -20,7 +20,7 @@ func NewCommentHandler(commentBusiness comments.Business) *CommentHandler {
 
 func (uh *CommentHandler) AddComment(e echo.Context) error {
 
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"err": err.Error(),
@@ -37,7 +37,7 @@ func (uh *CommentHandler) AddComment(e echo.Context) error {
 	comment := request.CommentRequest{}
 	e.Bind(&comment)
 
-	err = uh.CommentBusiness.AddComment(comment.Content, articleId, userId)
+	err = uh.CommentBusiness.AddComment(comment.Content, contentId, userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err": err.Error(),
@@ -50,7 +50,7 @@ func (uh *CommentHandler) AddComment(e echo.Context) error {
 }
 
 func (uh *CommentHandler) UpdateComment(e echo.Context) error {
-	_, err := strconv.Atoi(e.Param("articleId"))
+	_, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err": err.Error(),
@@ -87,7 +87,7 @@ func (uh *CommentHandler) UpdateComment(e echo.Context) error {
 }
 
 func (uh *CommentHandler) DeleteComment(e echo.Context) error {
-	_, err := strconv.Atoi(e.Param("articleId"))
+	_, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err": err.Error(),
@@ -122,13 +122,13 @@ func (uh *CommentHandler) DeleteComment(e echo.Context) error {
 }
 
 func (alh *CommentHandler) GetArticleComments(e echo.Context) error {
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
 		})
 	}
-	data, err := alh.CommentBusiness.GetArticleComments(articleId)
+	data, err := alh.CommentBusiness.GetArticleComments(contentId)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"err":     err.Error(),

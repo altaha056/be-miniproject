@@ -1,0 +1,3 @@
+package constants
+
+const ANOTHER_PASS = "p1a2d3a4s5u6a7t8u9h8a6r65i4h23i1d2u3p5l6a7h8s9e9o0r0a8n7g5a4n3a3k"

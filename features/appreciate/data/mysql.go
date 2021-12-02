@@ -22,10 +22,7 @@ func (alr *mysqlRatingRepository) Upvote(articleId, userId int) error {
 		ArticleId: articleId,
 		UserId:    userId,
 	})
-	// err := alr.Conn.Where("article_id = ? AND user_id", articleId, userId).First(&articleRating).Error
-	// if err != nil {
-	// 	return errors.New("article is already liked")
-	// }
+	
 	err := alr.Conn.Create(&articleRating).Error
 	if err != nil {
 		return err

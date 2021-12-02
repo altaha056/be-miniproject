@@ -19,9 +19,9 @@ func NewRatingHandler(ratingBusiness appreciate.Business) *RatingHandler {
 	return &RatingHandler{RatingBusiness: ratingBusiness}
 }
 
-func (uh *RatingHandler) LikeArticle(e echo.Context) error {
+func (uh *RatingHandler) UpVote(e echo.Context) error {
 
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -33,7 +33,7 @@ func (uh *RatingHandler) LikeArticle(e echo.Context) error {
 			"err":     err.Error(),
 		})
 	}
-	err = uh.RatingBusiness.Upvote(articleId, userId)
+	err = uh.RatingBusiness.Upvote(contentId, userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -45,8 +45,8 @@ func (uh *RatingHandler) LikeArticle(e echo.Context) error {
 	})
 }
 
-func (uh *RatingHandler) UnlikeArticle(e echo.Context) error {
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+func (uh *RatingHandler) DownVote(e echo.Context) error {
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -58,7 +58,7 @@ func (uh *RatingHandler) UnlikeArticle(e echo.Context) error {
 			"err":     err.Error(),
 		})
 	}
-	err = uh.RatingBusiness.Downvote(articleId, userId)
+	err = uh.RatingBusiness.Downvote(contentId, userId)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
@@ -71,7 +71,7 @@ func (uh *RatingHandler) UnlikeArticle(e echo.Context) error {
 
 }
 
-func (alh *RatingHandler) GetLikedArticles(e echo.Context) error {
+func (alh *RatingHandler) Rating(e echo.Context) error {
 	userId, err := strconv.Atoi(e.Param("userId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
@@ -92,14 +92,14 @@ func (alh *RatingHandler) GetLikedArticles(e echo.Context) error {
 
 }
 
-func (alh *RatingHandler) GetLikingUsers(e echo.Context) error {
-	articleId, err := strconv.Atoi(e.Param("articleId"))
+func (alh *RatingHandler) WhoVote(e echo.Context) error {
+	contentId, err := strconv.Atoi(e.Param("contentId"))
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"err":     err.Error(),
 		})
 	}
-	data, err := alh.RatingBusiness.WhoVote(articleId)
+	data, err := alh.RatingBusiness.WhoVote(contentId)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"err":     err.Error(),

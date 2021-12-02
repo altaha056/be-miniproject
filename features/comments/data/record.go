@@ -1,7 +1,7 @@
 package data
 
 import (
-	"antonio/features/articles"
+	"antonio/features/contents"
 	"antonio/features/comments"
 	"time"
 
@@ -15,12 +15,12 @@ type Comment struct {
 	UserID    int
 	User      User
 	ArticleID int
-	Article   Article
+	Article   Content
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-type Article struct {
+type Content struct {
 	gorm.Model
 	ID        int
 	Title     string
@@ -54,7 +54,7 @@ func toCommentsRecord(data comments.Core) Comment {
 	}
 }
 
-func toUserRecord(user articles.UserCore) User {
+func toUserRecord(user contents.UserCore) User {
 	return User{
 		ID:       user.ID,
 		Email:    user.Email,

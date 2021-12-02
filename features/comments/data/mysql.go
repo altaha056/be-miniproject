@@ -62,7 +62,7 @@ func (cr *mysqlCommentsRepository) DeleteComment(commentId int) error {
 func (cr *mysqlCommentsRepository) GetArticleComments(articleId int) ([]comments.Core, error) {
 
 	commentsArticle := []Comment{}
-	err := cr.Conn.Where("article_id = ?", articleId).Find(&commentsArticle).Error
+	err := cr.Conn.Joins("JOIN users on comments.user_id=users.id").Where("article_id = ?", articleId).Find(&commentsArticle).Error
 	if err != nil {
 		return []comments.Core{}, err
 	}

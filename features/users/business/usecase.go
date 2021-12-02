@@ -52,21 +52,3 @@ func (us *userUsecase) GetUserById(id int) (users.Core, error) {
 
 	return userData, nil
 }
-
-// func (uu *userUsecase) GetUserFollowingById(userId int) ([]users.Core, error) {
-// 	users, err := uu.UserData.GetUserFollowingById(userId)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	return users, nil
-// }
-
-// func (uu *userUsecase) GetUserFollowersById(userId int) ([]users.Core, error) {
-// 	users, err := uu.UserData.GetUserFollowersById(userId)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	return users, nil
-// }

@@ -1,7 +1,6 @@
 package data
 
 import (
-	"antonio/features/articles"
 	"antonio/features/appreciate"
 	"time"
 
@@ -11,12 +10,12 @@ import (
 type Rating struct {
 	gorm.Model
 	ArticleID int
-	Article   Article
+	Article   Content
 	UserID    int
 	User      User
 }
 
-type Article struct {
+type Content struct {
 	gorm.Model
 	ID        int
 	Title     string
@@ -26,7 +25,7 @@ type Article struct {
 	UpdatedAt time.Time
 	UserID    int
 	User      User
-	Tags      []Tag `gorm:"many2many:article_tags;"`
+	Tools     []Tool `gorm:"many2many:content_tool;"`
 }
 
 type User struct {
@@ -36,7 +35,7 @@ type User struct {
 	Username string
 }
 
-type Tag struct {
+type Tool struct {
 	gorm.Model
 	ID    int
 	Title string `gorm:"unique"`
@@ -49,7 +48,7 @@ func toRatingRecord(data appreciate.Core) Rating {
 	}
 }
 
-func toUserRecord(user articles.UserCore) User {
+func toUserRecord(user appreciate.UserCore) User {
 	return User{
 		ID:       user.ID,
 		Email:    user.Email,
@@ -57,15 +56,15 @@ func toUserRecord(user articles.UserCore) User {
 	}
 }
 
-func toTagRecord(tag articles.TagCore) Tag {
-	return Tag{
-		ID:    tag.ID,
-		Title: tag.Title,
+func toTagRecord(tool appreciate.ToolCore) Tool {
+	return Tool{
+		ID:    tool.ID,
+		Title: tool.Title,
 	}
 }
 
-func toArticleRecord(article articles.Core) Article {
-	return Article{
+func toArticleRecord(article appreciate.ArticleCore) Content {
+	return Content{
 		ID:        article.ID,
 		Title:     article.Title,
 		Image:     article.Image,
@@ -74,11 +73,11 @@ func toArticleRecord(article articles.Core) Article {
 		UpdatedAt: article.UpdatedAt,
 		UserID:    article.UserId,
 		User:      toUserRecord(article.User),
-		Tags:      toTagsRecordList(article.Tags),
+		Tools:     toTagsRecordList(article.Tools),
 	}
 }
 
-func toArticleCore(article Article) appreciate.ArticleCore {
+func toArticleCore(article Content) appreciate.ArticleCore {
 	return appreciate.ArticleCore{
 		ID:        article.ID,
 		Title:     article.Title,
@@ -87,7 +86,7 @@ func toArticleCore(article Article) appreciate.ArticleCore {
 		CreatedAt: article.CreatedAt,
 		UpdatedAt: article.UpdatedAt,
 		User:      toUserCore(article.User),
-		Tags:      toTagsCoreList(article.Tags),
+		Tools:     toTagsCoreList(article.Tools),
 	}
 }
 
@@ -99,10 +98,10 @@ func toUserCore(user User) appreciate.UserCore {
 	}
 }
 
-func toTagCore(tag Tag) appreciate.TagCore {
-	return appreciate.TagCore{
-		ID:    tag.ID,
-		Title: tag.Title,
+func toTagCore(tool Tool) appreciate.ToolCore {
+	return appreciate.ToolCore{
+		ID:    tool.ID,
+		Title: tool.Title,
 	}
 }
 
@@ -125,21 +124,21 @@ func toArticleCoreList(aList []Rating) []appreciate.ArticleCore {
 	return convertedArticle
 }
 
-func toTagsCoreList(tList []Tag) []appreciate.TagCore {
-	convertedTag := []appreciate.TagCore{}
+func toTagsCoreList(tList []Tool) []appreciate.ToolCore {
+	convertedTag := []appreciate.ToolCore{}
 
-	for _, tag := range tList {
-		convertedTag = append(convertedTag, toTagCore(tag))
+	for _, tool := range tList {
+		convertedTag = append(convertedTag, toTagCore(tool))
 	}
 
 	return convertedTag
 }
 
-func toTagsRecordList(tList []articles.TagCore) []Tag {
-	convertedUser := []Tag{}
+func toTagsRecordList(tList []appreciate.ToolCore) []Tool {
+	convertedUser := []Tool{}
 
-	for _, tag := range tList {
-		convertedUser = append(convertedUser, toTagRecord(tag))
+	for _, tool := range tList {
+		convertedUser = append(convertedUser, toTagRecord(tool))
 	}
 
 	return convertedUser

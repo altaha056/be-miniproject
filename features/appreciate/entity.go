@@ -11,8 +11,8 @@ type Core struct {
 
 type UserCore struct {
 	ID       int
-	Email    string
 	Username string
+	Email    string
 }
 
 type ArticleCore struct {
@@ -24,10 +24,10 @@ type ArticleCore struct {
 	UpdatedAt time.Time
 	UserId    int
 	User      UserCore
-	Tags      []TagCore
+	Tools     []ToolCore
 }
 
-type TagCore struct {
+type ToolCore struct {
 	ID    int
 	Title string
 }
