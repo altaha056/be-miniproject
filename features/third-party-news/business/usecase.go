@@ -1,12 +1,12 @@
-package service
+package business
 
-import "antonio/features/news"
+import "antonio/features/third-party-news"
 
 type ApiService struct {
-	newsRepository news.Repository
+	newsRepository news.Data
 }
 
-func NewApiService(nr news.Repository) news.Service {
+func NewApiService(nr news.Data) news.Business {
 	return &ApiService{nr}
 }
 

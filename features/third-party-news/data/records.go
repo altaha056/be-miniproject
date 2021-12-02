@@ -2,7 +2,7 @@ package data
 
 import (
 	"time"
-	"antonio/features/news"
+	"antonio/features/third-party-news"
 )
 
 type Data struct {

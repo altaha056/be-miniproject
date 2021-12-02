@@ -2,15 +2,15 @@ package presentation
 
 import (
 	"net/http"
-	"antonio/features/news"
+	"antonio/features/third-party-news"
 	"github.com/labstack/echo/v4"
 )
 
 type NewsHandler struct {
-	newsService news.Service
+	newsService news.Business
 }
 
-func NewNewsHandler(ns news.Service) *NewsHandler {
+func NewNewsHandler(ns news.Business) *NewsHandler {
 	return &NewsHandler{ns}
 }
 

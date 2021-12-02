@@ -15,10 +15,10 @@ type NewsCore struct {
 	Url         string    `json: "url"`
 }
 
-type Service interface {
+type Business interface {
 	GetNews(keyword string) ([]NewsCore, error)
 }
 
-type Repository interface {
+type Data interface {
 	GetData(keyword string) ([]NewsCore, error)
 }

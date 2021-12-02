@@ -29,9 +29,9 @@ import (
 	commentsPresentation "antonio/features/comments/presentation"
 
 	//news entitiy
-	newsData "antonio/features/news/data"
-	newsPresent "antonio/features/news/presentation"
-	newsService "antonio/features/news/business"
+	newsData "antonio/features/third-party-news/data"
+	newsPresent "antonio/features/third-party-news/presentation"
+	newsService "antonio/features/third-party-news/business"
 )
 
 type Presenter struct {

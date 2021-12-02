@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"antonio/features/news"
+	"antonio/features/third-party-news"
 )
 
 type NewsApi struct {
@@ -13,7 +13,7 @@ type NewsApi struct {
 	Key    string
 }
 
-func NewNewsApiRepository(url string, key string) news.Repository {
+func NewNewsApiRepository(url string, key string) news.Data {
 	return &NewsApi{
 		URL:    url,
 		Client: http.Client{},
