@@ -4,7 +4,6 @@ import (
 	"antonio/constants"
 	"antonio/factory"
 	"antonio/middlewares"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -49,6 +48,8 @@ func New() *echo.Echo {
 	e.POST("/content/:contentId/comments", presenter.CommentHandler.AddComment)
 	e.PATCH("/content/:contentId/comments/:commentId", presenter.CommentHandler.UpdateComment)
 	e.DELETE("/content/:contentId/comments/:commentId", presenter.CommentHandler.DeleteComment)
+
+	e.GET("/news", presenter.NewsPresentation.GetNewsHandler)
 
 	return e
 

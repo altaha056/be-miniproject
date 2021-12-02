@@ -3,30 +3,35 @@ package factory
 import (
 	"antonio/db"
 
-	// auth domain
+	// auth entity
 	authBusiness "antonio/features/authentication/business"
 	authData "antonio/features/authentication/data"
 	authPresentation "antonio/features/authentication/presentation"
 
-	// user domain
+	// user entity
 	userBusiness "antonio/features/users/business"
 	userData "antonio/features/users/data"
 	userPresentation "antonio/features/users/presentation"
 
-	// article domain
+	// content entity
 	articleBusiness "antonio/features/contents/business"
 	articleData "antonio/features/contents/data"
 	articlePresentation "antonio/features/contents/presentation"
 
-	// appreciate domain
+	// rating entity
 	appreciateBusiness "antonio/features/appreciate/business"
 	appreciateData "antonio/features/appreciate/data"
 	appreciatePresentation "antonio/features/appreciate/presentation"
 
-	// comments domain
+	// comments entity
 	commentsBusiness "antonio/features/comments/business"
 	commentsData "antonio/features/comments/data"
 	commentsPresentation "antonio/features/comments/presentation"
+
+	//news entitiy
+	newsData "antonio/features/third-party-news/data"
+	newsPresent "antonio/features/third-party-news/presentation"
+	newsService "antonio/features/third-party-news/business"
 )
 
 type Presenter struct {
@@ -35,6 +40,7 @@ type Presenter struct {
 	ArticleHandler      articlePresentation.ArticleHandler
 	RatingHandler    	appreciatePresentation.RatingHandler
 	CommentHandler      commentsPresentation.CommentHandler
+	NewsPresentation        newsPresent.NewsHandler
 }
 
 func Init() Presenter {
@@ -63,11 +69,17 @@ func Init() Presenter {
 	commentsBusiness := commentsBusiness.NewCommentsBusiness(commentsData)
 	commentsPresentation := commentsPresentation.NewCommentHandler(commentsBusiness)
 
+	// news 3rd party api layer
+	newsData := newsData.NewNewsApiRepository("http://api.mediastack.com/v1/news", "dd327eaab090f4964b6370f78d3591f3")
+	newsService := newsService.NewApiService(newsData)
+
+	
 	return Presenter{
 		AuthHandler:         *authPresentation,
 		UserHandler:         *userPresentation,
 		ArticleHandler:      *articlePresentation,
 		RatingHandler: 	 	 *appreciatePresentation,
 		CommentHandler:      *commentsPresentation,
+		NewsPresentation:	 *newsPresent.NewNewsHandler(newsService),
 	}
 }
