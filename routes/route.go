@@ -50,6 +50,8 @@ func New() *echo.Echo {
 	e.PATCH("/content/:contentId/comments/:commentId", presenter.CommentHandler.UpdateComment)
 	e.DELETE("/content/:contentId/comments/:commentId", presenter.CommentHandler.DeleteComment)
 
+	e.GET("/news", presenter.NewsPresentation.GetNewsHandler)
+
 	return e
 
 }
