@@ -23,13 +23,13 @@ func CreateToken(userId int) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(constants.ACCESS_TOKEN_KEY))
+	return token.SignedString([]byte(constants.ANOTHER_PASS))
 }
 
 
 func VerifyAccessToken(c echo.Context) (userId int, err error) {
 	keyFunc := func(t *jwt.Token) (interface{}, error) {
-		return []byte(constants.ACCESS_TOKEN_KEY), nil
+		return []byte(constants.ANOTHER_PASS), nil
 	}
 	accessToken := strings.Split(c.Request().Header.Get("Authorization"), " ")[1]
 	jwtToken, err := jwt.ParseWithClaims(accessToken, &JwtCustomClaims{}, keyFunc)

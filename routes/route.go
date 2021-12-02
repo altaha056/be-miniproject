@@ -13,10 +13,14 @@ func New() *echo.Echo {
 	e := echo.New()
 
 	configJWT := middleware.JWTConfig{
-		SigningKey: []byte(constants.ACCESS_TOKEN_KEY),
+		SigningKey: []byte(constants.ANOTHER_PASS),
 		Claims:     &middlewares.JwtCustomClaims{},
 	}
 
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))
+	
 	presenter := factory.Init()
 
 	e.POST("/user/login", presenter.AuthHandler.LoginHandler)
