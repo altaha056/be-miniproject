@@ -4,6 +4,7 @@ import (
 	"antonio/features/users"
 	"antonio/features/users/mocks"
 	"errors"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -47,6 +48,7 @@ func TestMain(m *testing.M){
 		Password: "123123",
 	}
 
+	os.Exit(m.Run())
 }
 
 func TestGetUsers(t *testing.T){
@@ -62,5 +64,11 @@ func TestGetUsers(t *testing.T){
 		resp, err := userServ.GetAllUsers()
 		assert.NotNil(t, err)
 		assert.Nil(t, resp)
+	})
+}
+
+func TestRegisterUser(t *testing.T){
+	t.Run("register user success", func(t *testing.T){
+		userRepo.On("CreateUser", mock.AnythingOfType("string")).Return(false, nil).Once()
 	})
 }

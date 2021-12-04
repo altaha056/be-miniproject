@@ -1,19 +1,13 @@
-FROM golang:latest
-
-LABEL maintainer="antonio"
+FROM golang:1.17-alpine3.14
 
 WORKDIR /app
 
-COPY go.mod .
-
-COPY go.sum .
+COPY . .
 
 RUN go mod download
 
-COPY . .
+RUN go build -o antonio
 
-ENV PORT 8000
-
-RUN go build
+EXPOSE 8000
 
 CMD ["./antonio"]

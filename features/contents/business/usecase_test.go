@@ -5,6 +5,9 @@ import (
 	"antonio/features/contents/mocks"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 var (
@@ -39,4 +42,27 @@ func TestMain(m *testing.M){
 	}
 
 	os.Exit(m.Run())
+}
+
+func TestCreateContent(t *testing.T){
+	t.Run("create content success", func(t *testing.T) {
+		cRepository.On("CreateArticle", mock.AnythingOfType("contents.Core")).Return(nil).Once()
+		err:=cService.CreateArticle(cData, cData.UserId)
+		assert.Nil(t, err)
+	})
+}
+
+func TestGetContent(t *testing.T){
+	t.Run("get content success", func(t *testing.T) {
+		cRepository.On("GetAllArticles", mock.AnythingOfType("contents.Core")).Return(csData, nil).Once()
+	})
+}
+
+func TestDeleteContent(t *testing.T){
+	t.Run("delete content", func(t *testing.T) {
+		cRepository.On("GetArticleById", mock.AnythingOfType("int")).Return(cData,nil).Once()
+		cRepository.On("DeleteArticleById",mock.AnythingOfType("contents.Core")).Return(nil).Once()
+		err := cService.DeleteArticleById(cData.ID, cData.UserId)
+		assert.Nil(t, err)
+	})
 }
