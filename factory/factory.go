@@ -40,7 +40,7 @@ type Presenter struct {
 	ArticleHandler      articlePresentation.ArticleHandler
 	RatingHandler    	appreciatePresentation.RatingHandler
 	CommentHandler      commentsPresentation.CommentHandler
-	NewsPresentation        newsPresent.NewsHandler
+	NewsPresentation    newsPresent.NewsHandler
 }
 
 func Init() Presenter {
@@ -54,7 +54,7 @@ func Init() Presenter {
 	userBusiness := userBusiness.NewUserBusiness(userData)
 	userPresentation := userPresentation.NewUserHandler(userBusiness)
 
-	// articles layer
+	// content layer
 	articleData := articleData.NewMysqlArticleRepository(db.DB)
 	articleBusiness := articleBusiness.NewArticleBusiness(articleData)
 	articlePresentation := articlePresentation.NewArticleHandler(articleBusiness)
